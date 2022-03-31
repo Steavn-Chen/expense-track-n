@@ -1,0 +1,40 @@
+body {
+  background-color: rgb(209, 225, 236);
+}
+.container{
+  border: 1px solid red;
+  max-width: 1000px;
+  min-width: 380px;
+}
+
+.select-group {
+  border: 1px solid orange;
+  display: flex;
+  justify-content: center;
+}
+.select-group  > .form-select  {
+  border:1px solid yellow;
+  max-width: 200px;
+  min-width: 100px;
+
+}
+.total-demo {
+  margin-top: 20px;
+  border: 1px solid green;
+}
+.total-demo .total-name {
+  border:1px solid red;
+  margin-top: 25px;
+  padding: 10px;
+  display: flex;
+  justify-content: flex-end;
+ /* color:rgb(20, 243, 31) */
+}
+.total-demo .total-amount {
+  border:1px solid orange;
+  padding: 10px;
+  font-size: 50px;
+  margin-top: 20px;
+
+  /* color:orange */
+}
