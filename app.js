@@ -1,7 +1,8 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
-const recordList = require('./records.json')
-const categoryList = require('./categories.json')
+const Record = require('./models/record.js')
+// const recordList = require('./models/seeds/records.json')
+// const categoryList = require('./models/seeds/categories.json')
 const mongoose = require('mongoose')
 mongoose.connect('mongodb://localhost/expense-trackerss', {
   useNewUrlParser: true, 
@@ -27,7 +28,12 @@ app.set('view engine', 'hbs')
 app.use(express.static('public'))
 
 app.get('/', (req, res) => {
-  res.render('index', { records: recordList })
+  return Record.find()
+    .lean()
+    .then(records => {
+      res.render("index", { records: records })
+    })
+    .catch(err => console.error(err))
 })
 app.get("/new", (req, res) => {
   res.render("new")
