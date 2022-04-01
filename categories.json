@@ -1,0 +1,27 @@
+[
+  {
+    "category_en": "traffic",
+    "category": "交通出行",
+    "icon": "fa-solid fa-van-shuttle "
+  },
+  {
+    "category_en": "home",
+    "category": "家居物業",
+    "icon": "fa-solid fa-face-grin-beam"
+  },
+  {
+    "category_en": "leisure",
+    "category": "休閒娛樂",
+    "icon": "fa-solid fa-face-grin-beam"
+  },
+  {
+    "category_en": "food",
+    "category": "餐飲食品",
+    "icon": "fa-solid fa-utensils"
+  },
+   {
+    "category_en": "other",
+    "category": "其他",
+    "icon": "fa-solid fa-pen"
+  }
+]
