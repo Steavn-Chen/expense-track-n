@@ -1,5 +1,5 @@
 <div class="container newDisplay">
-  <form action="/" method="post">
+  <form action="/new" method="post">
     <div class="row g-3 align-items-center input-demo">
       <div class="col-3" id="input-demo-title">
         <label for="inputPassword6" class="col-form-label" id="col-form-label-title">
@@ -13,36 +13,38 @@
     <hr>
     <div class="row g-3 align-items-center input-demo">
       <div class="col-3">
-        <label for="inputPassword6" class="col-form-label"><span>名稱<small>* </small>  :</span></label>
+        <label for="name" class="col-form-label"><span>名稱<small>* </small>  :</span></label>
       </div>
       <div class="col-6 d-flex justify-content-center">
-        <input type="text" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline">
+        <input type="text" id="name" class="form-control" aria-describedby="passwordHelpInline" name="name" minlength="0" maxlength="20" onkeyup="value=value.replace(/[^\w\u4E00-\u9FA5]/g, '')" value=" 美美" >
       </div>
     </div>
     <div class="row g-3 align-items-center input-demo">
       <div class="col-3">
-        <label for="inputPassword6" class="col-form-label"><span>日期<small>* </small> :</span></label>
+        <label for="date" class="col-form-label"><span>日期<small>* </small> :</span></label>
       </div>
       <div class="col-6 d-flex justify-content-center">
-        <input type="date" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline">
+        <input type="date" id="date" class="form-control" name="date" aria-describedby="passwordHelpInline">
       </div>
     </div>
     <div class="row g-3 align-items-center input-demo">
       <div class="col-3">
-        <label for="inputPassword6" class="col-form-label"><span>類別<small>* </small> :</span></label>
+        <label for="category" class="col-form-label"><span>類別<small>* </small> :</span></label>
       </div>
       <div class="col-6 d-flex justify-content-center">
-        <select id="disabledSelect" class="form-select">
-          <option>Disabled select</option>
+        <select id="category" class="form-select" name="category">
+          {{#each categories}}
+           <option>{{this.category}}</option>
+          {{/each }}
         </select>
       </div>
     </div>
     <div class="row g-3 align-items-center input-demo">
       <div class="col-3">
-        <label for="inputPassword6" class="col-form-label"><span>金額<small>*  </small> :</span></label>
+        <label for="amount" class="col-form-label"><span>金額<small>*  </small> :</span></label>
       </div>
       <div class="col-6 d-flex justify-content-center">
-        <input type="number" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline">
+        <input type="text" id="amount" class="form-control" aria-describedby="passwordHelpInline" minlength="0" maxlength="12" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" name="amount" value="2222">
       </div>
     </div>
     <div class=" new-button">
