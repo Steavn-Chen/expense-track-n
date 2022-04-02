@@ -79,7 +79,7 @@
         <p class="total-name ">總金額 : </p>
       </div>
       <div class="col-7 ">
-        <p class="total-amount text-warning my-auto">25260 元</p>
+        <p class="total-amount text-warning my-auto">{{totalAmount}} 元</p>
       </div>
     </div>
   </div>
@@ -103,7 +103,7 @@
             {{this.amount}}
           </div>
           <div class="col-md-3 col-sm-6  list-btn">
-            <form action="" method="post">
+            <form action="/records/{{this._id}}/delete" method="post">
               <div class="btn-demo ">
                 <a href="/records/{{this._id}}/edit" class="btn btn-secondary " id="editBtn">修改</a>
                 <button type="submit" class="btn btn-danger " id="deleteBtn">刪除</button>

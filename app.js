@@ -3,8 +3,7 @@ const bodyParser = require('body-parser')
 const exphbs = require('express-handlebars')
 const Record = require('./models/record.js')
 const hbsHelpers = require('handlebars-helpers')
-const moment = require('moment')
-const { getDate } = require('./tools/helpers.js')
+const { getDate, getTotal } = require('./tools/helpers.js')
 // const recordList = require('./models/seeds/records.json')
 // const categoryList = require('./models/seeds/categories.json')
 const Category = require('./models/category.js')
@@ -41,7 +40,9 @@ app.get('/', (req, res) => {
   return Record.find()
     .lean()
     .then(records => {
-      res.render('index', { records: records })
+      records = records.map((i) => (i = { ...i, date: getDate(i.date) }))
+      const totalAmount = getTotal(records)
+      res.render('index', { records: records, totalAmount })
     })
     .catch(err => console.error(err))
 })
@@ -54,7 +55,6 @@ app.get('/new', (req, res) => {
     .catch(err => console.error(err))
 })
 app.post('/new', (req, res) => {
-
   // 第一種搜尋方式 
   // return Category.findOne({ category: req.body.category})
   //  第二種搜尋方式
@@ -127,8 +127,9 @@ app.post('/records/:_id/edit', (req, res) => {
     ])
     .then((resultIcon) => {
       const icon = resultIcon[0].categoryIcon
-      console.log('iocn',icon)
+      //  第一種搜尋
       return Record.updateOne({ _id }, { name, date, category, icon, amount})
+      // 第二種搜尋
       // return Record.updateOne({ _id }, { ...req.body, icon })
         .then((record) => {
           record.date = getDate(record.date)
@@ -137,6 +138,12 @@ app.post('/records/:_id/edit', (req, res) => {
         .catch((err) => console.error(err))
     })
     .catch((err) => console.error(err))
+})
+app.post('/records/:_id/delete', (req, res) => {
+  const _id = req.params._id
+  return Record.deleteOne({ _id })
+    .then(() => res.redirect('/'))
+    .catch(err => console.error(err))
 })
 
 app.listen(port, () => {
