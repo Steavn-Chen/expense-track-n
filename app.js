@@ -4,8 +4,7 @@ const exphbs = require('express-handlebars')
 const Record = require('./models/record.js')
 const hbsHelpers = require('handlebars-helpers')
 const { getDate, getTotal } = require('./tools/helpers.js')
-// const recordList = require('./models/seeds/records.json')
-// const categoryList = require('./models/seeds/categories.json')
+
 const Category = require('./models/category.js')
 const mongoose = require('mongoose')
 mongoose.connect('mongodb://localhost/expense-trackerss', {
@@ -74,7 +73,7 @@ app.post('/new', (req, res) => {
       // 第一種寫法
       return Record.create({...req.body, icon })
         .then((record) => {
-          res.render('new')
+          res.redirect('/')
         })
         .catch((err) => console.error(err))
       // 第二種寫法
@@ -95,6 +94,32 @@ app.post('/new', (req, res) => {
     })
     .catch((err) => console.error(err))
 })
+app.get('/search', (req, res) => {
+  let message
+  const keyword = req.query.keyword.trim()
+  if (!keyword) {
+     message = '請輸入字元 !'
+     res.render('error', { message })
+  }
+  return Category.find()
+    .lean()
+    .then(categories => {
+      return Record.find({ name: { $regex: keyword, $options: 'i' } })
+        .lean()
+        .then((records) => {
+          if (records.length === 0) {
+            message = '沒有查詢到相閞名稱的記錄 !'
+            return res.render('error', { message })
+          }
+          records = records.map((i) => (i = { ...i, date: getDate(i.date) }))
+          const totalAmount = getTotal(records)
+          res.render('index', { records, categories, totalAmount })
+        })
+        .catch((err) => console.error(err))
+    })
+    .catch(err => console.error(err))
+})
+
 app.get('/records/:_id/edit', (req, res) => {
   const _id = req.params._id
   return Category.find()
@@ -112,7 +137,6 @@ app.get('/records/:_id/edit', (req, res) => {
 })
 app.post('/records/:_id/edit', (req, res) => {
   const _id = req.params._id
-  console.log(req.body)
   const { name, date, amount, category } = req.body
     return Category.aggregate([
       {

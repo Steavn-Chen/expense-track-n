@@ -22,12 +22,12 @@
 
     <div class="collapse navbar-collapse" id="navbarColor03">
       <ul class="navbar-nav me-auto">
-        <li class="nav-item">
+        {{!-- <li class="nav-item">
           <a class="nav-link active" href="#">Home
             <span class="visually-hidden">(current)</span>
           </a>
-        </li>
-        <li class="nav-item">
+        </li> --}}
+        {{!-- <li class="nav-item">
           <a class="nav-link" href="#">Features</a>
         </li>
         <li class="nav-item">
@@ -35,8 +35,8 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">About</a>
-        </li>
-        <li class="nav-item dropdown">
+        </li> --}}
+        {{!-- <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
           <div class="dropdown-menu">
             <a class="dropdown-item" href="#">Action</a>
@@ -45,18 +45,16 @@
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#">Separated link</a>
           </div>
-        </li>
+        </li> --}}
       </ul>
-      <form class="d-flex">
-        <input class="form-control me-sm-2" type="text" placeholder="Search">
+      <form class="d-flex" action="/search">
+        <input class="form-control me-sm-2" type="text" placeholder="Search"  onkeyup="value=value.replace(/[^\w\u4E00-\u9FA5]/g, '')" minlength="1" maxlength="20" name="keyword" value="">
         <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
       </form>
     </div>
   </div>
 </nav>
-
-  {{{body}}}
-  
+  {{{body}}} 
   <script src="/javascripts/popper.js"></script>
   <script src="/javascripts/bootstrap.js"></script>
 </body>
