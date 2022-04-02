@@ -1,5 +1,5 @@
 <div class='container newDisplay'>
-  <form action='/records/{{ this._id }}/edit' method='post'>
+  <form action='/records/{{ record._id }}/edit' method='post'>
     <div class='row g-3 align-items-center input-demo'>
       <div class='col-3' id='input-demo-title'>
         <label
@@ -38,7 +38,7 @@
       <div class='col-3'>
         <label for='date' class='col-form-label'><span>日期<small>* </small>
             :</span></label>
-      </div>{{record.date}}
+      </div>
       <div class='col-6 d-flex justify-content-center'>
         <input
           type='date'

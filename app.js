@@ -3,6 +3,8 @@ const bodyParser = require('body-parser')
 const exphbs = require('express-handlebars')
 const Record = require('./models/record.js')
 const hbsHelpers = require('handlebars-helpers')
+const moment = require('moment')
+const { getDate } = require('./tools/helpers.js')
 // const recordList = require('./models/seeds/records.json')
 // const categoryList = require('./models/seeds/categories.json')
 const Category = require('./models/category.js')
@@ -61,7 +63,7 @@ app.post('/new', (req, res) => {
       $match: { category: req.body.category } 
     }, 
     {
-      $project: { _id: 0, __v: 0, category_en: 0, category:0 }
+      $project: { _id: 0, __v: 0, category_en: 0, category: 0 }
     },
     {
       $project: { categoryIcon: '$icon' }
@@ -95,15 +97,42 @@ app.post('/new', (req, res) => {
 })
 app.get('/records/:_id/edit', (req, res) => {
   const _id = req.params._id
-  console.log(_id)
   return Category.find()
     .lean()
     .then((categories) => {
       return Record.findById(_id)
         .lean()
         .then((record) => {
-          console.log('record', record)
+          record.date = getDate(record.date)
           res.render('edit', { record, categories })
+        })
+        .catch((err) => console.error(err))
+    })
+    .catch((err) => console.error(err))
+})
+app.post('/records/:_id/edit', (req, res) => {
+  const _id = req.params._id
+  console.log(req.body)
+  const { name, date, amount, category } = req.body
+    return Category.aggregate([
+      {
+        $match: { category: category }
+      },
+      {
+        $project: { _id: 0, __v: 0, category_en: 0, category: 0 }
+      },
+      {
+        $project: { categoryIcon: '$icon'}
+      }
+    ])
+    .then((resultIcon) => {
+      const icon = resultIcon[0].categoryIcon
+      console.log('iocn',icon)
+      return Record.updateOne({ _id }, { name, date, category, icon, amount})
+      // return Record.updateOne({ _id }, { ...req.body, icon })
+        .then((record) => {
+          record.date = getDate(record.date)
+          res.redirect(`/records/${_id}/edit`)
         })
         .catch((err) => console.error(err))
     })
