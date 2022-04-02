@@ -8,7 +8,6 @@ mongoose.connect('mongodb://localhost/expense-trackerss', {
 
 const db = mongoose.connection
 
-
 db.once('open', () => {
   console.log('mongodb is open.')
   return Category.insertMany(categoryList)
@@ -17,5 +16,4 @@ db.once('open', () => {
       console.log('insertMany categories ok.')
     })
     .catch(err => console.error(err))
-
 })

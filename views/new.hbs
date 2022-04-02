@@ -1,96 +1,52 @@
-<nav id="navbar-example2" class="navbar navbar-light bg-light px-3">
-  <a class="navbar-brand" href="#">Navbar</a>
-  <ul class="nav nav-pills">
-    <li class="nav-item">
-      <a class="nav-link" href="#scrollspyHeading1">First</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#scrollspyHeading2">Second</a>
-    </li>
-    <li class="nav-item dropdown">
-      <a
-        class="nav-link dropdown-toggle"
-        data-bs-toggle="dropdown"
-        href="#"
-        role="button"
-        aria-expanded="false"
-      >Dropdown</a>
-      <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#scrollspyHeading3">Third</a></li>
-        <li><a class="dropdown-item" href="#scrollspyHeading4">Fourth</a></li>
-        <li><hr class="dropdown-divider" /></li>
-        <li><a class="dropdown-item" href="#scrollspyHeading5">Fifth</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
-<div
-  data-bs-spy="scroll"
-  data-bs-target="#navbar-example2"
-  data-bs-offset="0"
-  class="scrollspy-example"
-  tabindex="0"
->
-  <h4 id="scrollspyHeading1">First heading</h4>
-  <p>...</p>
-  <h4 id="scrollspyHeading2">Second heading</h4>
-  <p>...</p>
-  <h4 id="scrollspyHeading3">Third heading</h4>
-  <p>...</p>
-  <h4 id="scrollspyHeading4">Fourth heading</h4>
-  <p>...</p>
-  <h4 id="scrollspyHeading5">Fifth heading</h4>
-  <p>...</p>
+<div class="container newDisplay">
+  <form action="/" method="post">
+    <div class="row g-3 align-items-center input-demo">
+      <div class="col-3" id="input-demo-title">
+        <label for="inputPassword6" class="col-form-label" id="col-form-label-title">
+          <p>*必填欄位</p>
+        </label>
+      </div>
+      <div class="col-6 form-p">
+        <p>請輸入你的支出</p>
+      </div>
+    </div>
+    <hr>
+    <div class="row g-3 align-items-center input-demo">
+      <div class="col-3">
+        <label for="inputPassword6" class="col-form-label"><span>名稱<small>* </small>  :</span></label>
+      </div>
+      <div class="col-6 d-flex justify-content-center">
+        <input type="text" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline">
+      </div>
+    </div>
+    <div class="row g-3 align-items-center input-demo">
+      <div class="col-3">
+        <label for="inputPassword6" class="col-form-label"><span>日期<small>* </small> :</span></label>
+      </div>
+      <div class="col-6 d-flex justify-content-center">
+        <input type="date" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline">
+      </div>
+    </div>
+    <div class="row g-3 align-items-center input-demo">
+      <div class="col-3">
+        <label for="inputPassword6" class="col-form-label"><span>類別<small>* </small> :</span></label>
+      </div>
+      <div class="col-6 d-flex justify-content-center">
+        <select id="disabledSelect" class="form-select">
+          <option>Disabled select</option>
+        </select>
+      </div>
+    </div>
+    <div class="row g-3 align-items-center input-demo">
+      <div class="col-3">
+        <label for="inputPassword6" class="col-form-label"><span>金額<small>*  </small> :</span></label>
+      </div>
+      <div class="col-6 d-flex justify-content-center">
+        <input type="number" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline">
+      </div>
+    </div>
+    <div class=" new-button">
+      <button class="a_demo_one col-5">新增支出</button>
+    </div>
+  </form>
 </div>
- <div class="container" style="height:550px;width:auto;overflow:auto;background:#EEEEEE;">
-
-<table class="table table-warning  table-hover"  >
-      <tbody>
-        <tr>
-          <th scope="row" class="icon"><i class="fa-solid fa-house fa-5x"></i></th>
-          <td class="content">
-            <p class="name">電影 : 驚奇隊長</p>
-            <p class="time">2022/12/12</p>
-          </td>
-          <td class="amount">50</td>
-          <td class="button">
-            <a href="http://" class="btn">修改</a>
-            <form action="" method="post">
-             <button type="submit" class="btn">刪除</button>
-            </form>
-          </td>
-        </tr>
-       
-        <tr>
-          <th scope="row" class="icon"><i class="fa-solid fa-van-shuttle fa-5x"></i></th>
-          <td>Column content</td>
-          <td>Column content</td>
-          <td>Column content</td>
-        </tr>
-         <tr>
-          <th scope="row" class="icon"><i class="fa-solid fa-face-grin-beam fa-5x"></i></th>
-          <td>Column content</td>
-          <td>Column content</td>
-          <td>Column content</td>
-        </tr>
-        <tr>
-          <th scope="row" class="icon"><i class="fa-solid fa-utensils fa-5x"></i></th>
-          <td>Column content</td>
-          <td>Column content</td>
-          <td>Column content</td>
-        </tr>
-         <tr>
-          <th scope="row" class="icon"><i class="fa-solid fa-pen fa-5x"></i></th>
-          <td>Column content</td>
-          <td>Column content</td>
-          <td>Column content</td>
-        </tr>
-        <tr>
-          <th scope="row" class="icon"><i class="fa-solid fa-pen fa-5x"></i></th>
-          <td>Column content</td>
-          <td>Column content</td>
-          <td>Column content</td>
-        </tr>
-      </tbody>
-    </table>
- </div>
