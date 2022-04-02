@@ -2,6 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const exphbs = require('express-handlebars')
 const Record = require('./models/record.js')
+const hbsHelpers = require('handlebars-helpers')
 // const recordList = require('./models/seeds/records.json')
 // const categoryList = require('./models/seeds/categories.json')
 const Category = require('./models/category.js')
@@ -26,7 +27,10 @@ const port = 3000
 
 app.use(bodyParser.urlencoded({ extended: true }))
 
-app.engine('hbs', exphbs({ defaultLayouts: 'main', extname: 'hbs'}))
+app.engine(
+  'hbs',
+  exphbs({ defaultLayouts: 'main', extname: 'hbs', helpers: hbsHelpers() })
+)
 app.set('view engine', 'hbs')
 
 app.use(express.static('public'))
@@ -86,6 +90,22 @@ app.post('/new', (req, res) => {
       // })
       //   .then(() => res.render('new'))
       //   .catch((err) => console.error(err))
+    })
+    .catch((err) => console.error(err))
+})
+app.get('/records/:_id/edit', (req, res) => {
+  const _id = req.params._id
+  console.log(_id)
+  return Category.find()
+    .lean()
+    .then((categories) => {
+      return Record.findById(_id)
+        .lean()
+        .then((record) => {
+          console.log('record', record)
+          res.render('edit', { record, categories })
+        })
+        .catch((err) => console.error(err))
     })
     .catch((err) => console.error(err))
 })
