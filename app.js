@@ -3,7 +3,7 @@ const bodyParser = require('body-parser')
 const exphbs = require('express-handlebars')
 const Record = require('./models/record.js')
 const hbsHelpers = require('handlebars-helpers')
-const { getDate, getTotal } = require('./tools/helpers.js')
+const { getDate, getTotal, getYear } = require('./tools/helpers.js')
 
 const Category = require('./models/category.js')
 const mongoose = require('mongoose')
@@ -36,12 +36,24 @@ app.set('view engine', 'hbs')
 app.use(express.static('public'))
 
 app.get('/', (req, res) => {
-  return Record.find()
+  const monthList = Array.from({ length: 12 }, (v, i) =>  ({ value: i + 1 }))
+  // const monthList = Array.from({ length: 12 }, (v, i) => v = i + 1 )
+  return Category.aggregate([
+    {
+      $project: { id: 0, __v: 0, icon: 0, category_en: 0 }
+    }
+  ])
+    .then(categories => {
+        return Record.find()
     .lean()
+    .sort({ date: 'asc'})
     .then(records => {
       records = records.map((i) => (i = { ...i, date: getDate(i.date) }))
       const totalAmount = getTotal(records)
-      res.render('index', { records: records, totalAmount })
+      const yearList = getYear(records)
+      res.render('index', { records: records, totalAmount, year: yearList, month: monthList, categories })
+    })
+    .catch(err => console.error(err))
     })
     .catch(err => console.error(err))
 })
@@ -119,7 +131,39 @@ app.get('/search', (req, res) => {
     })
     .catch(err => console.error(err))
 })
-
+app.get('/filter', (req, res) => {
+  const monthList = Array.from({ length: 12 }, (v, i) => ({ value: i + 1 }))
+  console.log(monthList)
+  const options = req.query
+  let message
+  console.log('query',req.query)
+  console.log('params',req.params)
+  console.log('body',req.body)
+  return Category.find()
+    .lean()
+    .then(categories => {
+      console.log('categories.length', categories.length)
+      // return Record.find({
+        // })
+        // .lean()
+      return Record.aggregate([
+        {
+          $match: { category: '$req.query.category'}
+        }
+      ])
+      .then(records => {
+        console.log('recotdlength',records.length)
+        if (records.length === 0) {
+          message = '沒有查詢到相關名稱的記錄 !'
+          return res.render('error', { message })
+        }
+        records = records.map((i) => (i = { ...i, date: getDate(i.date) }))
+        const totalAmount = getTotal(records)
+        res.render('index', { records, categories, totalAmount, month: monthList, options })
+      })
+    })
+    .catch(err => console.error(err))
+})
 app.get('/records/:_id/edit', (req, res) => {
   const _id = req.params._id
   return Category.find()

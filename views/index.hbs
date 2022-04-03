@@ -1,31 +1,33 @@
 <div class="container">
   <div class="row g-3 mt-2 p-2">
-    <form action="/filter" method="post">
+    <form action="/filter">
       <div class="col row">
         <div class="col select-group">
-          <select class="form-select btn-info" id="floatingSelectGrid" aria-label="Floating label select example"
+          <select class="form-select btn-info" id="floatingSelectGrid" aria-label="Floating label select example" name="year"
             onchange="submit()">
             <option selected disabled>年份</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
+            {{#each year}}
+            <option value="{{this.value}}" {{#is this.value ../options.year}} selected {{/is}}>{{this.value}}年</option>
+            {{/each}}
           </select>
         </div>
         <div class="col select-group">
-          <select class="form-select btn-info" id="floatingSelectGrid" aria-label="Floating label select example"
+          <select class="form-select btn-info" id="floatingSelectGrid" aria-label="Floating label select example" name="month"
             onchange="submit()">
             <option selected disabled>月份</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
+            {{#each month}}
+            {{!-- <option value="{{this.value}}">{{this.name_cht}}</option> --}}
+            <option value="{{this.value}}" {{#is this.value ../options.month }} selected {{/is}}>{{this.value}}月</option>
+            {{!-- <option value="{{this}}">{{this}} 月</option> --}}
+            {{/each}}
           </select>
         </div>
         <div class="col select-group">
-          <select class="form-select btn-info" id="floatingSelectGrid" aria-label="Floating label select example"
+          <select class="form-select btn-info" id="floatingSelectGrid" aria-label="Floating label select example" name="category"
             onchange="submit()">
             <option selected disabled>類別</option>
             {{#each categories}}
-            <option value="{{this.category}}">{{this.category}}</option>
+            <option value="{{this.category}}" {{#is this.category ../options.category }} selected {{/is}}>{{this.category}}</option>
             {{/each}}
           </select>
         </div>
