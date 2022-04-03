@@ -44,16 +44,16 @@ app.get('/', (req, res) => {
     }
   ])
     .then(categories => {
-        return Record.find()
-    .lean()
-    .sort({ date: 'asc'})
-    .then(records => {
-      records = records.map((i) => (i = { ...i, date: getDate(i.date) }))
-      const totalAmount = getTotal(records)
-      const yearList = getYear(records)
-      res.render('index', { records: records, totalAmount, year: yearList, month: monthList, categories })
-    })
-    .catch(err => console.error(err))
+      return Record.find()
+        .lean()
+        .sort({ date: 'asc'})
+        .then(records => {
+          records = records.map((i) => (i = { ...i, date: getDate(i.date) }))
+          const totalAmount = getTotal(records)
+          const yearList = getYear(records)
+          res.render('index', { records: records, totalAmount, year: yearList, month: monthList, categories })
+        })
+        .catch(err => console.error(err))
     })
     .catch(err => console.error(err))
 })
@@ -133,34 +133,72 @@ app.get('/search', (req, res) => {
 })
 app.get('/filter', (req, res) => {
   const monthList = Array.from({ length: 12 }, (v, i) => ({ value: i + 1 }))
-  console.log(monthList)
-  const options = req.query
   let message
-  console.log('query',req.query)
-  console.log('params',req.params)
-  console.log('body',req.body)
+  const options = req.query
   return Category.find()
     .lean()
     .then(categories => {
-      console.log('categories.length', categories.length)
-      // return Record.find({
-        // })
-        // .lean()
       return Record.aggregate([
         {
-          $match: { category: '$req.query.category'}
+          $project: {
+            date: '$date'
+          }
         }
       ])
-      .then(records => {
-        console.log('recotdlength',records.length)
-        if (records.length === 0) {
-          message = '沒有查詢到相關名稱的記錄 !'
-          return res.render('error', { message })
-        }
-        records = records.map((i) => (i = { ...i, date: getDate(i.date) }))
-        const totalAmount = getTotal(records)
-        res.render('index', { records, categories, totalAmount, month: monthList, options })
-      })
+        .then((recordsYear) => {
+          const yearList = getYear(recordsYear)
+          // return Record.find({
+          // })
+          // .lean()
+          return Record.aggregate([
+            {
+              $project: {
+                name: '$name',
+                category: '$category',
+                date: '$date',
+                amount: '$amount',
+                icon: '$icon',
+                month: { $month: '$date' },
+                year: { $year: '$date' },
+              },
+            },
+            {
+              $match: {
+                category: options.category ? options.category : String,
+                month: options.month ? Number(options.month) : Number,
+                year: options.year ? Number(options.year) : Number,
+              },
+            },
+          ])
+            .then((records) => {
+              if (records.length === 0) {
+                message = '沒有查詢到相關名稱的記錄 !'
+                const totalAmount = 0
+                return res.render('index', {
+                  message,
+                  options,
+                  totalAmount,
+                  categories,
+                  month: monthList,
+                  year: yearList,
+                })
+              }
+              records = records.map(
+                (i) => (i = { ...i, date: getDate(i.date) })
+              )
+              const totalAmount = getTotal(records)
+              res.render('index', {
+                records,
+                categories,
+                totalAmount,
+                month: monthList,
+                year: yearList,
+                options,
+              })
+            })
+            .catch((err) => console.error(err))
+        })
+        .catch((err) => console.error(err))
     })
     .catch(err => console.error(err))
 })

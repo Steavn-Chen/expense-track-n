@@ -11,6 +11,9 @@ module.exports = {
   },
   getYear: function(records) {
     let result = []
+    if (records.length === 0) {
+      return 0
+    }
     records.forEach(i => {
       const isCheck = result.includes(moment(i.date).format('YYYY'))
       if (!isCheck) {
@@ -18,7 +21,7 @@ module.exports = {
       }
     })
     // 第一種方法
-    result = result.map(i => (i = { value: i }))
+    result = result.map(i => (i = { value: i })).sort((a, b) => b - a)
     return result
     // 第二種方法
     // const results = []
