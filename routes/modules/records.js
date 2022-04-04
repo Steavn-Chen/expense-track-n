@@ -61,5 +61,56 @@ router.post('/new', (req, res) => {
     })
     .catch((err) => console.error(err))
 })
+router.get('/:_id/edit', (req, res) => {
+  const _id = req.params._id
+  return Category.find()
+    .lean()
+    .then((categories) => {
+      return Record.findById(_id)
+        .lean()
+        .then((record) => {
+          record.date = getDate(record.date)
+          res.render('edit', { record, categories })
+        })
+        .catch((err) => console.error(err))
+    })
+    .catch((err) => console.error(err))
+})
+router.put('/:_id', (req, res) => {
+  const _id = req.params._id
+  const { name, date, amount, category } = req.body
+  return Category.aggregate([
+    {
+      $match: { category: category },
+    },
+    {
+      $project: { _id: 0, __v: 0, category_en: 0, category: 0 },
+    },
+    {
+      $project: { categoryIcon: '$icon' },
+    },
+  ])
+    .then((resultIcon) => {
+      const icon = resultIcon[0].categoryIcon
+      //  第一種搜尋
+      return (
+        Record.updateOne({ _id }, { name, date, category, icon, amount })
+          // 第二種搜尋
+          // return Record.updateOne({ _id }, { ...req.body, icon })
+          .then((record) => {
+            record.date = getDate(record.date)
+            res.redirect(`/records/${_id}/edit`)
+          })
+          .catch((err) => console.error(err))
+      )
+    })
+    .catch((err) => console.error(err))
+})
+router.delete('/:_id', (req, res) => {
+  const _id = req.params._id
+  return Record.deleteOne({ _id })
+    .then(() => res.redirect('/'))
+    .catch((err) => console.error(err))
+})
 
 module.exports = router

@@ -148,236 +148,236 @@ app.use(methodOverride('_method'))
 //     })
 //     .catch((err) => console.error(err))
 // })
-app.get('/search', (req, res) => {
-  let message
-  const keyword = req.query.keyword.trim()
-  if (!keyword) {
-     message = '請輸入字元 !'
-     res.render('error', { message })
-  }
-  return Category.find()
-    .lean()
-    .then(categories => {
-      return Record.find({ name: { $regex: keyword, $options: 'i' } })
-        .lean()
-        .then((records) => {
-          if (records.length === 0) {
-            message = '沒有查詢到相閞名稱的記錄 !'
-            return res.render('error', { message })
-          }
-          records = records.map((i) => (i = { ...i, date: getDate(i.date) }))
-          const totalAmount = getTotal(records)
-          res.render('index', { records, categories, totalAmount })
-        })
-        .catch((err) => console.error(err))
-    })
-    .catch(err => console.error(err))
-})
-app.get('/filter', (req, res) => {
-  const monthList = Array.from({ length: 12 }, (v, i) => ({ value: i + 1 }))
-  let message
-  const options = req.query
-  return Category.find()
-    .lean()
-    .then(categories => {
-      return Record.aggregate([
-        {
-          $project: {
-            date: '$date'
-          }
-        }
-      ])
-        .then((recordsYear) => {
-          const yearList = getYear(recordsYear)
-          // return Record.find({
-          // })
-          // .lean()
-          return Record.aggregate([
-            {
-              $project: {
-                name: '$name',
-                category: '$category',
-                date: '$date',
-                amount: '$amount',
-                icon: '$icon',
-                month: { $month: '$date' },
-                year: { $year: '$date' },
-              },
-            },
-            {
-              $match: {
-                category: options.category ? options.category : String,
-                month: options.month ? Number(options.month) : Number,
-                year: options.year ? Number(options.year) : Number,
-              },
-            },
-          ])
-            .then((records) => {
-              if (records.length === 0) {
-                message = '沒有查詢到相關名稱的記錄 !'
-                const totalAmount = 0
-                return res.render('index', {
-                  message,
-                  options,
-                  totalAmount,
-                  categories,
-                  month: monthList,
-                  year: yearList,
-                })
-              }
-              records = records.map(
-                (i) => (i = { ...i, date: getDate(i.date) })
-              )
-              const totalAmount = getTotal(records)
-              res.render('index', {
-                records,
-                categories,
-                totalAmount,
-                month: monthList,
-                year: yearList,
-                options,
-              })
-            })
-            .catch((err) => console.error(err))
-        })
-        .catch((err) => console.error(err))
-    })
-    .catch(err => console.error(err))
-})
-// 測試日期寫法開頭
-app.get('/filter2', (req, res) => {
-  const monthList = Array.from({ length: 12 }, (v, i) => ({ value: i + 1 }))
-  let message
-  const startDate = new Date(req.query.startDate)
-  const endDate = new Date(req.query.endDate)
-  const options = req.query
-  return Category.find()
-    .lean()
-    .then(categories => {
-      return Record.aggregate([
-        {
-          $project: {
-            date: '$date'
-          }
-        }
-      ])
-        .then((recordsYear) => {
-          const yearList = getYear(recordsYear) 
-          if (!options.startDate || !options.endDate ) {
-            message = '請輸入開始或者最新時間 !'
-            const totalAmount = 0
-            return res.render('index', {
-              message,
-              options,
-              totalAmount,
-              categories,
-              month: monthList,
-              year: yearList,
-            })
-          }
-          return Record.aggregate([
-            {
-              $project: {
-                name: '$name',
-                category: '$category',
-                date: '$date',
-                amount: '$amount',
-                icon: '$icon',
-                month: { $month: '$date' },
-                year: { $year: '$date' },
-              },
-            },
-            {
-              $match: {
-                category: options.category ? options.category : String,
-                date: { $gte: startDate, $lt: endDate }
-            //     month: options.month ? Number(options.month) : Number,
-            //     year: options.year ? Number(options.year) : Number,
-              },
-            },
-          ])
-            .then((records) => {
-              if (records.length === 0) {
-                message = '沒有查詢到消費記錄 !'
-                const totalAmount = 0
-                return res.render('index', {
-                  message,
-                  options,
-                  totalAmount,
-                  categories,
-                  month: monthList,
-                  year: yearList,
-                })
-              }
-              records = records.map(
-                (i) => (i = { ...i, date: getDate(i.date) })
-              )
-              const totalAmount = getTotal(records)
-              res.render('index', {
-                records,
-                categories,
-                totalAmount,
-                month: monthList,
-                year: yearList,
-                options,
-              })
-            })
-            .catch((err) => console.error(err))
-        })
-        .catch(err => console.error(err))  
-    })
-    .catch(err => console.error(err))
-})
+// app.get('/search', (req, res) => {
+//   let message
+//   const keyword = req.query.keyword.trim()
+//   if (!keyword) {
+//      message = '請輸入字元 !'
+//      res.render('error', { message })
+//   }
+//   return Category.find()
+//     .lean()
+//     .then(categories => {
+//       return Record.find({ name: { $regex: keyword, $options: 'i' } })
+//         .lean()
+//         .then((records) => {
+//           if (records.length === 0) {
+//             message = '沒有查詢到相閞名稱的記錄 !'
+//             return res.render('error', { message })
+//           }
+//           records = records.map((i) => (i = { ...i, date: getDate(i.date) }))
+//           const totalAmount = getTotal(records)
+//           res.render('index', { records, categories, totalAmount })
+//         })
+//         .catch((err) => console.error(err))
+//     })
+//     .catch(err => console.error(err))
+// })
+// app.get('/filter', (req, res) => {
+//   const monthList = Array.from({ length: 12 }, (v, i) => ({ value: i + 1 }))
+//   let message
+//   const options = req.query
+//   return Category.find()
+//     .lean()
+//     .then(categories => {
+//       return Record.aggregate([
+//         {
+//           $project: {
+//             date: '$date'
+//           }
+//         }
+//       ])
+//         .then((recordsYear) => {
+//           const yearList = getYear(recordsYear)
+//           // return Record.find({
+//           // })
+//           // .lean()
+//           return Record.aggregate([
+//             {
+//               $project: {
+//                 name: '$name',
+//                 category: '$category',
+//                 date: '$date',
+//                 amount: '$amount',
+//                 icon: '$icon',
+//                 month: { $month: '$date' },
+//                 year: { $year: '$date' },
+//               },
+//             },
+//             {
+//               $match: {
+//                 category: options.category ? options.category : String,
+//                 month: options.month ? Number(options.month) : Number,
+//                 year: options.year ? Number(options.year) : Number,
+//               },
+//             },
+//           ])
+//             .then((records) => {
+//               if (records.length === 0) {
+//                 message = '沒有查詢到相關名稱的記錄 !'
+//                 const totalAmount = 0
+//                 return res.render('index', {
+//                   message,
+//                   options,
+//                   totalAmount,
+//                   categories,
+//                   month: monthList,
+//                   year: yearList,
+//                 })
+//               }
+//               records = records.map(
+//                 (i) => (i = { ...i, date: getDate(i.date) })
+//               )
+//               const totalAmount = getTotal(records)
+//               res.render('index', {
+//                 records,
+//                 categories,
+//                 totalAmount,
+//                 month: monthList,
+//                 year: yearList,
+//                 options,
+//               })
+//             })
+//             .catch((err) => console.error(err))
+//         })
+//         .catch((err) => console.error(err))
+//     })
+//     .catch(err => console.error(err))
+// })
+// // 測試日期寫法開頭
+// app.get('/filter2', (req, res) => {
+//   const monthList = Array.from({ length: 12 }, (v, i) => ({ value: i + 1 }))
+//   let message
+//   const startDate = new Date(req.query.startDate)
+//   const endDate = new Date(req.query.endDate)
+//   const options = req.query
+//   return Category.find()
+//     .lean()
+//     .then(categories => {
+//       return Record.aggregate([
+//         {
+//           $project: {
+//             date: '$date'
+//           }
+//         }
+//       ])
+//         .then((recordsYear) => {
+//           const yearList = getYear(recordsYear) 
+//           if (!options.startDate || !options.endDate ) {
+//             message = '請輸入開始或者最新時間 !'
+//             const totalAmount = 0
+//             return res.render('index', {
+//               message,
+//               options,
+//               totalAmount,
+//               categories,
+//               month: monthList,
+//               year: yearList,
+//             })
+//           }
+//           return Record.aggregate([
+//             {
+//               $project: {
+//                 name: '$name',
+//                 category: '$category',
+//                 date: '$date',
+//                 amount: '$amount',
+//                 icon: '$icon',
+//                 month: { $month: '$date' },
+//                 year: { $year: '$date' },
+//               },
+//             },
+//             {
+//               $match: {
+//                 category: options.category ? options.category : String,
+//                 date: { $gte: startDate, $lt: endDate }
+//             //     month: options.month ? Number(options.month) : Number,
+//             //     year: options.year ? Number(options.year) : Number,
+//               },
+//             },
+//           ])
+//             .then((records) => {
+//               if (records.length === 0) {
+//                 message = '沒有查詢到消費記錄 !'
+//                 const totalAmount = 0
+//                 return res.render('index', {
+//                   message,
+//                   options,
+//                   totalAmount,
+//                   categories,
+//                   month: monthList,
+//                   year: yearList,
+//                 })
+//               }
+//               records = records.map(
+//                 (i) => (i = { ...i, date: getDate(i.date) })
+//               )
+//               const totalAmount = getTotal(records)
+//               res.render('index', {
+//                 records,
+//                 categories,
+//                 totalAmount,
+//                 month: monthList,
+//                 year: yearList,
+//                 options,
+//               })
+//             })
+//             .catch((err) => console.error(err))
+//         })
+//         .catch(err => console.error(err))  
+//     })
+//     .catch(err => console.error(err))
+// })
 // 測試日期寫法結尾
-app.get('/records/:_id/edit', (req, res) => {
-  const _id = req.params._id
-  return Category.find()
-    .lean()
-    .then((categories) => {
-      return Record.findById(_id)
-        .lean()
-        .then((record) => {
-          record.date = getDate(record.date)
-          res.render('edit', { record, categories })
-        })
-        .catch((err) => console.error(err))
-    })
-    .catch((err) => console.error(err))
-})
-app.put('/records/:_id', (req, res) => {
-  const _id = req.params._id
-  const { name, date, amount, category } = req.body
-    return Category.aggregate([
-      {
-        $match: { category: category }
-      },
-      {
-        $project: { _id: 0, __v: 0, category_en: 0, category: 0 }
-      },
-      {
-        $project: { categoryIcon: '$icon'}
-      }
-    ])
-    .then((resultIcon) => {
-      const icon = resultIcon[0].categoryIcon
-      //  第一種搜尋
-      return Record.updateOne({ _id }, { name, date, category, icon, amount})
-      // 第二種搜尋
-      // return Record.updateOne({ _id }, { ...req.body, icon })
-        .then((record) => {
-          record.date = getDate(record.date)
-          res.redirect(`/records/${_id}/edit`)
-        })
-        .catch((err) => console.error(err))
-    })
-    .catch((err) => console.error(err))
-})
-app.delete('/records/:_id', (req, res) => {
-  const _id = req.params._id
-  return Record.deleteOne({ _id })
-    .then(() => res.redirect('/'))
-    .catch(err => console.error(err))
-})
+// app.get('/records/:_id/edit', (req, res) => {
+//   const _id = req.params._id
+//   return Category.find()
+//     .lean()
+//     .then((categories) => {
+//       return Record.findById(_id)
+//         .lean()
+//         .then((record) => {
+//           record.date = getDate(record.date)
+//           res.render('edit', { record, categories })
+//         })
+//         .catch((err) => console.error(err))
+//     })
+//     .catch((err) => console.error(err))
+// })
+// app.put('/records/:_id', (req, res) => {
+//   const _id = req.params._id
+//   const { name, date, amount, category } = req.body
+//     return Category.aggregate([
+//       {
+//         $match: { category: category }
+//       },
+//       {
+//         $project: { _id: 0, __v: 0, category_en: 0, category: 0 }
+//       },
+//       {
+//         $project: { categoryIcon: '$icon'}
+//       }
+//     ])
+//     .then((resultIcon) => {
+//       const icon = resultIcon[0].categoryIcon
+//       //  第一種搜尋
+//       return Record.updateOne({ _id }, { name, date, category, icon, amount})
+//       // 第二種搜尋
+//       // return Record.updateOne({ _id }, { ...req.body, icon })
+//         .then((record) => {
+//           record.date = getDate(record.date)
+//           res.redirect(`/records/${_id}/edit`)
+//         })
+//         .catch((err) => console.error(err))
+//     })
+//     .catch((err) => console.error(err))
+// })
+// app.delete('/records/:_id', (req, res) => {
+//   const _id = req.params._id
+//   return Record.deleteOne({ _id })
+//     .then(() => res.redirect('/'))
+//     .catch(err => console.error(err))
+// })
 app.use(routes)
 app.listen(port, () => {
   console.log(`Expense-tracker web is running on http://localhost:${port}`)
