@@ -35,28 +35,65 @@ app.set('view engine', 'hbs')
 
 app.use(express.static('public'))
 
+// app.get('/', (req, res) => {
+//   const monthList = Array.from({ length: 12 }, (v, i) =>  ({ value: i + 1 }))
+//   // const monthList = Array.from({ length: 12 }, (v, i) => v = i + 1 )
+//   return Category.aggregate([
+//     {
+//       $project: { id: 0, __v: 0, icon: 0, category_en: 0 }
+//     }
+//   ])
+//     .then(categories => {
+//       return Record.find()
+//         .lean()
+//         .sort({ date: 'asc'})
+//         .then(records => {
+//           records = records.map((i) => (i = { ...i, date: getDate(i.date) }))
+//           const totalAmount = getTotal(records)
+//           const yearList = getYear(records)
+//           res.render('index', { records: records, totalAmount, year: yearList, month: monthList, categories })
+//         })
+//         .catch(err => console.error(err))
+//     })
+//     .catch(err => console.error(err))
+// })
+//  查詢記錄時間時段首由開始
 app.get('/', (req, res) => {
-  const monthList = Array.from({ length: 12 }, (v, i) =>  ({ value: i + 1 }))
+  let end = new Date()
+  let start = new Date()
+  start = start.setDate(start.getYear() - 3650)
+  start = getDate(start) 
+  end = getDate(end)
+  const options = { start, end }
+  const monthList = Array.from({ length: 12 }, (v, i) => ({ value: i + 1 }))
   // const monthList = Array.from({ length: 12 }, (v, i) => v = i + 1 )
   return Category.aggregate([
     {
-      $project: { id: 0, __v: 0, icon: 0, category_en: 0 }
-    }
+      $project: { id: 0, __v: 0, icon: 0, category_en: 0 },
+    },
   ])
-    .then(categories => {
+    .then((categories) => {
       return Record.find()
         .lean()
-        .sort({ date: 'asc'})
-        .then(records => {
+        .sort({ date: 'asc' })
+        .then((records) => {
           records = records.map((i) => (i = { ...i, date: getDate(i.date) }))
           const totalAmount = getTotal(records)
           const yearList = getYear(records)
-          res.render('index', { records: records, totalAmount, year: yearList, month: monthList, categories })
+          res.render('index', {
+            records: records,
+            totalAmount,
+            year: yearList,
+            month: monthList,
+            categories,
+            options
+          })
         })
-        .catch(err => console.error(err))
+        .catch((err) => console.error(err))
     })
-    .catch(err => console.error(err))
+    .catch((err) => console.error(err))
 })
+//  查詢記錄時間時段首由結束
 app.get('/new', (req, res) => {
   return Category.find()
     .lean()
@@ -208,9 +245,6 @@ app.get('/filter2', (req, res) => {
   let message
   const startDate = new Date(req.query.startDate)
   const endDate = new Date(req.query.endDate)
-  console.log('query',req.query)
-  console.log('startDate',startDate)
-  console.log('endDate', endDate)
   const options = req.query
   return Category.find()
     .lean()
@@ -223,9 +257,7 @@ app.get('/filter2', (req, res) => {
         }
       ])
         .then((recordsYear) => {
-          const yearList = getYear(recordsYear)
-          console.log('categories.length', categories.length)
-          console.log('yearList.length', yearList.length)   
+          const yearList = getYear(recordsYear) 
           if (!options.startDate || !options.endDate ) {
             message = '請輸入開始或者最新時間 !'
             const totalAmount = 0

@@ -40,7 +40,7 @@
 
           <div class='col-5 d-flex justify-content-center'>
             <input type='date' id='date' class='form-control' name='startDate' aria-describedby='passwordHelpInline'
-              value="{{options.startDate}}" placeholder="2022/02/02" min="2000-01-01" max="{{options.endDate}}"
+              value="{{options.startDate}}" placeholder="2022/02/02" min="{{options.start}}" max="{{options.end}}"
                />
           </div>
           <div class="col-2 my-auto">
@@ -48,7 +48,7 @@
           </div>
           <div class='col-5 d-flex justify-content-center'>
             <input type='date' id='date' class='form-control' name='endDate' aria-describedby='passwordHelpInline'
-              value="{{options.endDate}}" placeholder="2022/02/02"  />
+              value="{{options.endDate}}" min="{{options.start}}" max="{{options.end}}" placeholder="2022/02/02"  />
           </div>
         </div>
         <div class="row col-md ">
