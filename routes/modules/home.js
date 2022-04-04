@@ -191,7 +191,7 @@ router.get('/filter2', (req, res) => {
         .then((recordsYear) => {
           const yearList = getYear(recordsYear)
           if (startDate > endDate) {
-            message = '最後的時間比起始的時間早，請重新輸入 !'
+            message = '最後時間比起始時間早，請重新輸入 !'
             const totalAmount = 0
             return res.render('index', {
               message,
