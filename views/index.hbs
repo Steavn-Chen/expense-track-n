@@ -35,7 +35,7 @@
     </form> --}}
 
     <form action="/filter2">
-      <div class="col row d-flex justify-content-center">
+      <div class="col row d-flex justify-content-center ">
         <div class="row col-md">
 
           <div class='col-5 d-flex justify-content-center'>
@@ -43,7 +43,7 @@
               value="{{options.startDate}}" placeholder="2022/02/02" min="{{options.start}}" max="{{options.end}}"
                />
           </div>
-          <div class="col-2 my-auto">
+          <div class="col-2 my-auto p-2">
             <p class=" my-auto d-flex justify-content-center text-dark text-align-center" >至</p>
           </div>
           <div class='col-5 d-flex justify-content-center'>
@@ -51,7 +51,7 @@
               value="{{options.endDate}}" min="{{options.start}}" max="{{options.end}}" placeholder="2022/02/02"  />
           </div>
         </div>
-        <div class="row col-md ">
+        <div class="row col-md p-2">
           <div class="col select-group">
             <select class="form-select btn-info" id="floatingSelectGrid" aria-label="Floating label select example"
               name="category">
@@ -64,7 +64,7 @@
           </div>
           <div class='col d-flex justify-content-center '>
             <button type="submit" class="button btn-success " style="margin-right:40px ;">送出</button>
-            <button type="submit" class="button btn-danger ml-2" name="filterMethod" value="filterClear">清除</button>
+            <button type="reset" class="button btn-danger ml-2" name="filterMethod" value="filterClear">清除</button>
           </div>
         </div>
       </div>
