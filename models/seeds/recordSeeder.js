@@ -1,10 +1,4 @@
-const mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost/expense-trackerss', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-
-const db = mongoose.connection;
+const db = require('../../config/mongoose.js')
 const Record = require('../record.js')
 const recordList = require('./records.json')
 

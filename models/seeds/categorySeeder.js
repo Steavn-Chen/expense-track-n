@@ -1,12 +1,7 @@
-const mongoose = require('mongoose')
-const categoryList = require('./categories.json')
+require('../../config/mongoose.js')
 const Category = require('../category.js')
-mongoose.connect('mongodb://localhost/expense-trackerss', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-
-const db = mongoose.connection
+const categoryList = require('./categories.json')
+const db = require('../../config/mongoose.js')
 
 db.once('open', () => {
   console.log('mongodb is open.')
