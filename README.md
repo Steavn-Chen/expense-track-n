@@ -1,6 +1,6 @@
 # 家用記帳本
 
-![rejected]('../圖片1.PNG')
+![rejected](https://github.com/Steavn-Chen/expense-track-n/blob/main/public/images/%E5%9C%96%E7%89%871.PNG)
 
 ### 本專案目的讓使用者記錄每個月的開銷記錄除了可以新增、修改、刪除，查詢上可以依照起始時間至最後時間查詢這段時間的消費記錄。
 
@@ -9,7 +9,7 @@
 - 將專案 clone 到本地端
 
 -
-https://github.com/Steavn-Chen/Short-Url-Generator-Heroku.git
+https://github.com/Steavn-Chen/expense-track-n
 
 - 進入到專案資料夾
 ```
