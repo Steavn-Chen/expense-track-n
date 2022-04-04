@@ -4,7 +4,7 @@ const router = express.Router()
 const Record = require('../../models/record.js')
 const Category = require('../../models/category.js')
 
-const { getDate, getTotal, getYear } = require('../../tools/helpers.js')
+const { getDate } = require('../../tools/helpers.js')
 
 router.get('/new', (req, res) => {
   let end = new Date()
