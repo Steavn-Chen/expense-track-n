@@ -105,7 +105,7 @@
             {{this.amount}} 元
           </div>
           <div class="col-md-3 col-sm-6  list-btn">
-            <form action="/records/{{this._id}}/delete" method="post">
+            <form action="/records/{{this._id}}?_method=DELETE" method="post">
               <div class="btn-demo ">
                 <a href="/records/{{this._id}}/edit" class="btn btn-secondary " id="editBtn">修改</a>
                 <button type="submit" class="btn btn-danger " id="deleteBtn">刪除</button>

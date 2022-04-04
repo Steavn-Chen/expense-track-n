@@ -1,8 +1,10 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const exphbs = require('express-handlebars')
-const Record = require('./models/record.js')
+const methodOverride = require('method-override')
+
 const hbsHelpers = require('handlebars-helpers')
+const Record = require('./models/record.js')
 const { getDate, getTotal, getYear } = require('./tools/helpers.js')
 const routes = require('./routes')
 
@@ -35,7 +37,7 @@ app.set('view engine', 'hbs')
   
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static('public'))
-
+app.use(methodOverride('_method'))
 
 
 // app.get('/', (req, res) => {
@@ -342,7 +344,7 @@ app.get('/records/:_id/edit', (req, res) => {
     })
     .catch((err) => console.error(err))
 })
-app.post('/records/:_id/edit', (req, res) => {
+app.put('/records/:_id', (req, res) => {
   const _id = req.params._id
   const { name, date, amount, category } = req.body
     return Category.aggregate([
@@ -370,7 +372,7 @@ app.post('/records/:_id/edit', (req, res) => {
     })
     .catch((err) => console.error(err))
 })
-app.post('/records/:_id/delete', (req, res) => {
+app.delete('/records/:_id', (req, res) => {
   const _id = req.params._id
   return Record.deleteOne({ _id })
     .then(() => res.redirect('/'))
