@@ -47,6 +47,7 @@ body {
 }
 .list-group-item > .row > .content {
   display: grid;
+  justify-content: center;
 }
 .list-group-item > .row > .content >.name {
   font-size: 30px;
@@ -195,4 +196,12 @@ body {
   font-size: 50px;
   color: rgb(190, 216, 241);
   text-shadow: 1px 1px 2px black, 0 0 15px blue, 0 0 2px blue;
+}
+
+.message-err {
+  /* border: 1px solid red; */
+  color: #180502;
+  text-align: center;
+  font-size: 50px;
+  margin-top: 80px;
 }

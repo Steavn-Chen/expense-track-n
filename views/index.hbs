@@ -1,10 +1,10 @@
 <div class="container">
   <div class="row g-3 mt-2 p-2">
-    <form action="/filter">
+    {{!-- <form action="/filter">
       <div class="col row">
         <div class="col select-group">
-          <select class="form-select btn-info" id="floatingSelectGrid" aria-label="Floating label select example" name="year"
-            onchange="submit()">
+          <select class="form-select btn-info" id="floatingSelectGrid" aria-label="Floating label select example"
+            name="year" onchange="submit()">
             <option selected value="">全部年份</option>
             {{#each year}}
             <option value="{{this.value}}" {{#is this.value ../options.year}} selected {{/is}}>{{this.value}}年</option>
@@ -12,64 +12,61 @@
           </select>
         </div>
         <div class="col select-group">
-          <select class="form-select btn-info" id="floatingSelectGrid" aria-label="Floating label select example" name="month"
-            onchange="submit()">
+          <select class="form-select btn-info" id="floatingSelectGrid" aria-label="Floating label select example"
+            name="month" onchange="submit()">
             <option selected value="">全部月份</option>
             {{#each month}}
-            <option value="{{this.value}}" {{#is this.value ../options.month }} selected {{/is}}>{{this.value}}月</option>
+            <option value="{{this.value}}" {{#is this.value ../options.month }} selected {{/is}}>{{this.value}}月
+            </option>
             {{/each}}
           </select>
         </div>
         <div class="col select-group">
-          <select class="form-select btn-info" id="floatingSelectGrid" aria-label="Floating label select example" name="category"
-            onchange="submit()">
+          <select class="form-select btn-info" id="floatingSelectGrid" aria-label="Floating label select example"
+            name="category" onchange="submit()">
             <option selected value="">全部類別</option>
             {{#each categories}}
-            <option value="{{this.category}}" {{#is this.category ../options.category }} selected {{/is}}>{{this.category}}</option>
+            <option value="{{this.category}}" {{#is this.category ../options.category }} selected {{/is}}>
+              {{this.category}}</option>
             {{/each}}
           </select>
         </div>
-        {{!-- 第二種備用 --}}
-        {{!-- <form>
-          <div class="row g-1">
-            <div class="col-4 col-md">
-              <div class="form-group">
+      </div>
+    </form> --}}
 
-                <select class="form-select btn-primary" id="exampleSelect1">
-                  <option>類別</option>
-                  <option>交通出行</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                </select>
-              </div>
-            </div>
-            <div class="col-4 col-md">
-              <div class="form-group">
+    <form action="/filter2">
+      <div class="col row d-flex justify-content-center">
+        <div class="row col-md">
 
-                <select class="form-select" id="exampleSelect1">
-                  <option>月份</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                </select>
-              </div>
-            </div>
-            <div class="col-4 col-md">
-              <div class="form-group">
-                <select class="form-select" id="exampleSelect1">
-                  <option>年份</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                </select>
-              </div>
-            </div>
+          <div class='col-5 d-flex justify-content-center'>
+            <input type='date' id='date' class='form-control' name='startDate' aria-describedby='passwordHelpInline'
+              value="{{options.startDate}}" placeholder="2022/02/02" min="2000-01-01" max="{{options.endDate}}"
+               />
           </div>
-        </form> --}}
-        {{!-- 第二種備用 --}}
+          <div class="col-2 my-auto">
+            <p class=" my-auto d-flex justify-content-center text-dark text-align-center" >至</p>
+          </div>
+          <div class='col-5 d-flex justify-content-center'>
+            <input type='date' id='date' class='form-control' name='endDate' aria-describedby='passwordHelpInline'
+              value="{{options.endDate}}" placeholder="2022/02/02"  />
+          </div>
+        </div>
+        <div class="row col-md ">
+          <div class="col select-group">
+            <select class="form-select btn-info" id="floatingSelectGrid" aria-label="Floating label select example"
+              name="category">
+              <option selected value="">全部類別</option>
+              {{#each categories}}
+              <option value="{{this.category}}" {{#is this.category ../options.category }} selected {{/is}}>
+                {{this.category}}</option>
+              {{/each}}
+            </select>
+          </div>
+          <div class='col d-flex justify-content-center '>
+            <button type="submit" class="button btn-success " style="margin-right:40px ;">送出</button>
+            <button type="submit" class="button btn-danger ml-2" name="filterMethod" value="filterClear">清除</button>
+          </div>
+        </div>
       </div>
     </form>
   </div>
@@ -83,13 +80,18 @@
       </div>
     </div>
   </div>
+  {{#if message}}
+  <div class="message-err">
+    {{message}}
+  </div>
+  {{/if}}
   <div class="list-demo">
     <ul class="list-group">
       {{#each records}}
       <li class="list-group-item ">
         <div class="row">
           <div class="col-md-3 col-sm-6 icon">
-            <i class="{{this.icon}} fa-5x" ></i>
+            <i class="{{this.icon}} fa-5x"></i>
           </div>
           <div class="col-md-3 col-sm-6  content">
             <div class=" name">
@@ -100,7 +102,7 @@
             </div>
           </div>
           <div class="col-md-3 col-sm-6  amount">
-            {{this.amount}}
+            {{this.amount}} 元
           </div>
           <div class="col-md-3 col-sm-6  list-btn">
             <form action="/records/{{this._id}}/delete" method="post">

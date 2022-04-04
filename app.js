@@ -202,6 +202,96 @@ app.get('/filter', (req, res) => {
     })
     .catch(err => console.error(err))
 })
+// 測試日期寫法開頭
+app.get('/filter2', (req, res) => {
+  const monthList = Array.from({ length: 12 }, (v, i) => ({ value: i + 1 }))
+  let message
+  const startDate = new Date(req.query.startDate)
+  const endDate = new Date(req.query.endDate)
+  console.log('query',req.query)
+  console.log('startDate',startDate)
+  console.log('endDate', endDate)
+  const options = req.query
+  return Category.find()
+    .lean()
+    .then(categories => {
+      return Record.aggregate([
+        {
+          $project: {
+            date: '$date'
+          }
+        }
+      ])
+        .then((recordsYear) => {
+          const yearList = getYear(recordsYear)
+          console.log('categories.length', categories.length)
+          console.log('yearList.length', yearList.length)   
+          if (!options.startDate || !options.endDate ) {
+            message = '請輸入開始或者最新時間 !'
+            const totalAmount = 0
+            return res.render('index', {
+              message,
+              options,
+              totalAmount,
+              categories,
+              month: monthList,
+              year: yearList,
+            })
+          }
+          return Record.aggregate([
+            {
+              $project: {
+                name: '$name',
+                category: '$category',
+                date: '$date',
+                amount: '$amount',
+                icon: '$icon',
+                month: { $month: '$date' },
+                year: { $year: '$date' },
+              },
+            },
+            {
+              $match: {
+                category: options.category ? options.category : String,
+                date: { $gte: startDate, $lt: endDate }
+            //     month: options.month ? Number(options.month) : Number,
+            //     year: options.year ? Number(options.year) : Number,
+              },
+            },
+          ])
+            .then((records) => {
+              if (records.length === 0) {
+                message = '沒有查詢到消費記錄 !'
+                const totalAmount = 0
+                return res.render('index', {
+                  message,
+                  options,
+                  totalAmount,
+                  categories,
+                  month: monthList,
+                  year: yearList,
+                })
+              }
+              records = records.map(
+                (i) => (i = { ...i, date: getDate(i.date) })
+              )
+              const totalAmount = getTotal(records)
+              res.render('index', {
+                records,
+                categories,
+                totalAmount,
+                month: monthList,
+                year: yearList,
+                options,
+              })
+            })
+            .catch((err) => console.error(err))
+        })
+        .catch(err => console.error(err))  
+    })
+    .catch(err => console.error(err))
+})
+// 測試日期寫法結尾
 app.get('/records/:_id/edit', (req, res) => {
   const _id = req.params._id
   return Category.find()
