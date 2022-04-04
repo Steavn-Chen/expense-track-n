@@ -178,10 +178,6 @@ router.get('/filter2', (req, res) => {
   let endDateFilter = endDate.setSeconds(endDate.getSeconds() + 86399)
   endDateFilter = new Date(endDateFilter)
   const options = {...req.query, start, end }
-  console.log()
-  console.log(req.query)
-  console.log(startDate)
-  console.log(endDateFilter)
   return Category.find()
     .lean()
     .then((categories) => {
@@ -194,7 +190,18 @@ router.get('/filter2', (req, res) => {
       ])
         .then((recordsYear) => {
           const yearList = getYear(recordsYear)
-          
+          if (startDate > endDate) {
+            message = '最後的時間比起始的時間早，請重新輸入 !'
+            const totalAmount = 0
+            return res.render('index', {
+              message,
+              options,
+              totalAmount,
+              categories,
+              month: monthList,
+              year: yearList,
+            })
+          }
           if (!options.startDate || !options.endDate) {
             message = '請輸入開始或者最新時間 !'
             const totalAmount = 0
