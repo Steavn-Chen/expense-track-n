@@ -4,6 +4,7 @@ const exphbs = require('express-handlebars')
 const Record = require('./models/record.js')
 const hbsHelpers = require('handlebars-helpers')
 const { getDate, getTotal, getYear } = require('./tools/helpers.js')
+const routes = require('./routes')
 
 const Category = require('./models/category.js')
 const mongoose = require('mongoose')
@@ -25,15 +26,17 @@ db.once('open', () => {
 const app = express()
 const port = 3000
 
-app.use(bodyParser.urlencoded({ extended: true }))
 
 app.engine(
   'hbs',
   exphbs({ defaultLayouts: 'main', extname: 'hbs', helpers: hbsHelpers() })
-)
+  )
 app.set('view engine', 'hbs')
-
+  
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static('public'))
+
+
 
 // app.get('/', (req, res) => {
 //   const monthList = Array.from({ length: 12 }, (v, i) =>  ({ value: i + 1 }))
@@ -58,91 +61,91 @@ app.use(express.static('public'))
 //     .catch(err => console.error(err))
 // })
 //  查詢記錄時間時段首由開始
-app.get('/', (req, res) => {
-  let end = new Date()
-  let start = new Date()
-  start = start.setDate(start.getYear() - 3650)
-  start = getDate(start) 
-  end = getDate(end)
-  const options = { start, end }
-  const monthList = Array.from({ length: 12 }, (v, i) => ({ value: i + 1 }))
-  // const monthList = Array.from({ length: 12 }, (v, i) => v = i + 1 )
-  return Category.aggregate([
-    {
-      $project: { id: 0, __v: 0, icon: 0, category_en: 0 },
-    },
-  ])
-    .then((categories) => {
-      return Record.find()
-        .lean()
-        .sort({ date: 'asc' })
-        .then((records) => {
-          records = records.map((i) => (i = { ...i, date: getDate(i.date) }))
-          const totalAmount = getTotal(records)
-          const yearList = getYear(records)
-          res.render('index', {
-            records: records,
-            totalAmount,
-            year: yearList,
-            month: monthList,
-            categories,
-            options
-          })
-        })
-        .catch((err) => console.error(err))
-    })
-    .catch((err) => console.error(err))
-})
+// app.get('/', (req, res) => {
+//   let end = new Date()
+//   let start = new Date()
+//   start = start.setDate(start.getYear() - 3650)
+//   start = getDate(start) 
+//   end = getDate(end)
+//   const options = { start, end }
+//   const monthList = Array.from({ length: 12 }, (v, i) => ({ value: i + 1 }))
+//   // const monthList = Array.from({ length: 12 }, (v, i) => v = i + 1 )
+//   return Category.aggregate([
+//     {
+//       $project: { id: 0, __v: 0, icon: 0, category_en: 0 },
+//     },
+//   ])
+//     .then((categories) => {
+//       return Record.find()
+//         .lean()
+//         .sort({ date: 'asc' })
+//         .then((records) => {
+//           records = records.map((i) => (i = { ...i, date: getDate(i.date) }))
+//           const totalAmount = getTotal(records)
+//           const yearList = getYear(records)
+//           res.render('index', {
+//             records: records,
+//             totalAmount,
+//             year: yearList,
+//             month: monthList,
+//             categories,
+//             options
+//           })
+//         })
+//         .catch((err) => console.error(err))
+//     })
+//     .catch((err) => console.error(err))
+// })
 //  查詢記錄時間時段首由結束
-app.get('/new', (req, res) => {
-  return Category.find()
-    .lean()
-    .then(categories => {
-      res.render('new', { categories: categories }) 
-    })
-    .catch(err => console.error(err))
-})
-app.post('/new', (req, res) => {
-  // 第一種搜尋方式 
-  // return Category.findOne({ category: req.body.category})
-  //  第二種搜尋方式
-  return Category.aggregate([
-    {
-      $match: { category: req.body.category } 
-    }, 
-    {
-      $project: { _id: 0, __v: 0, category_en: 0, category: 0 }
-    },
-    {
-      $project: { categoryIcon: '$icon' }
-    }
-  ])
-    .then((category) => {
-      const icon = category[0].categoryIcon
-      // 第一種寫法
-      return Record.create({...req.body, icon })
-        .then((record) => {
-          res.redirect('/')
-        })
-        .catch((err) => console.error(err))
-      // 第二種寫法
-      // const newBody = Object.assign(req.body, { icon })
-      // return Record.create(newBody)
-      //   .then(() => res.render('new'))
-      //   .catch(err => console.error(err))
-      // 第三種寫法
-      // return Record.create({
-      //   name: req.body.name,
-      //   date: req.body.date,
-      //   category: req.body.category,
-      //   amount: req.body.amount,
-      //   icon: icon,
-      // })
-      //   .then(() => res.render('new'))
-      //   .catch((err) => console.error(err))
-    })
-    .catch((err) => console.error(err))
-})
+// app.get('/new', (req, res) => {
+//   return Category.find()
+//     .lean()
+//     .then(categories => {
+//       res.render('new', { categories: categories }) 
+//     })
+//     .catch(err => console.error(err))
+// })
+// app.post('/new', (req, res) => {
+//   // 第一種搜尋方式 
+//   // return Category.findOne({ category: req.body.category})
+//   //  第二種搜尋方式
+//   return Category.aggregate([
+//     {
+//       $match: { category: req.body.category } 
+//     }, 
+//     {
+//       $project: { _id: 0, __v: 0, category_en: 0, category: 0 }
+//     },
+//     {
+//       $project: { categoryIcon: '$icon' }
+//     }
+//   ])
+//     .then((category) => {
+//       const icon = category[0].categoryIcon
+//       // 第一種寫法
+//       return Record.create({...req.body, icon })
+//         .then((record) => {
+//           res.redirect('/')
+//         })
+//         .catch((err) => console.error(err))
+//       // 第二種寫法
+//       // const newBody = Object.assign(req.body, { icon })
+//       // return Record.create(newBody)
+//       //   .then(() => res.render('new'))
+//       //   .catch(err => console.error(err))
+//       // 第三種寫法
+//       // return Record.create({
+//       //   name: req.body.name,
+//       //   date: req.body.date,
+//       //   category: req.body.category,
+//       //   amount: req.body.amount,
+//       //   icon: icon,
+//       // })
+//       //   .then(() => res.render('new'))
+//       //   .catch((err) => console.error(err))
+//     })
+//     .catch((err) => console.error(err))
+// })
 app.get('/search', (req, res) => {
   let message
   const keyword = req.query.keyword.trim()
@@ -373,7 +376,7 @@ app.post('/records/:_id/delete', (req, res) => {
     .then(() => res.redirect('/'))
     .catch(err => console.error(err))
 })
-
+app.use(routes)
 app.listen(port, () => {
   console.log(`Expense-tracker web is running on http://localhost:${port}`)
 })
