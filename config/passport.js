@@ -39,6 +39,7 @@ module.exports = (app) => {
     console.log('id', id)
     User.findById(id)
       .then(user => {
+        console.log('user',user)
         done(null, user)
       })
       .catch(err => done(err, null))
