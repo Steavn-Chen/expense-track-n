@@ -30,7 +30,9 @@ app.use(session({
 
 usePassport(app)
 app.use((req, res, next) => {
-  // console.log(req)
+  console.log(req.session)
+  console.log(req.sessionID)
+  console.log(req.sessionStore)
   next()
 })
 
