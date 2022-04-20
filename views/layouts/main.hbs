@@ -1,61 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href="https://png.pngtree.com/element_our/20190528/ourmid/pngtree-beard-family-father-father-image_1138006.jpg" type="image/x-icon">
+  <link rel="shortcut icon"
+    href="https://png.pngtree.com/element_our/20190528/ourmid/pngtree-beard-family-father-father-image_1138006.jpg"
+    type="image/x-icon">
   <title>expense tracker</title>
   <link rel="stylesheet" href="/stylesheets/bootstrap.css">
   <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
   <link rel="stylesheet" href="/stylesheets/style.css">
   <script src="https://kit.fontawesome.com/e43a9052ab.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/">家用記帳本</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">{{#if isAuthenticated }}{{user.name}}`{{/if}}家用記帳本</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03"
+        aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-    <div class="collapse navbar-collapse" id="navbarColor03">
-      <ul class="navbar-nav me-auto">
-        {{!-- <li class="nav-item">
-          <a class="nav-link active" href="#">Home
-            <span class="visually-hidden">(current)</span>
-          </a>
-        </li> --}}
-        {{!-- <li class="nav-item">
-          <a class="nav-link" href="#">Features</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Pricing</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">About</a>
-        </li> --}}
-        {{!-- <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Separated link</a>
-          </div>
-        </li> --}}
-      </ul>
-      <form class="d-flex" action="/search">
-        <input class="form-control me-sm-2" type="text" placeholder="Search"  onkeyup="value=value.replace(/[^\w\u4E00-\u9FA5]/g, '')" minlength="1" maxlength="20" name="keyword" value="">
-        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-      </form>
+      <div class="collapse navbar-collapse" id="navbarColor03">
+        <ul class="navbar-nav me-auto">
+          {{!-- <li class="nav-item">
+            <a class="nav-link active" href="#">Home
+              <span class="visually-hidden">(current)</span>
+            </a>
+          </li> --}}
+          {{!-- <li class="nav-item">
+            <a class="nav-link" href="#">Features</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Pricing</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li> --}}
+          {{!-- <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+              aria-expanded="false">Dropdown</a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Separated link</a>
+            </div>
+          </li> --}}
+        </ul>
+        <form class="d-flex" action="/search">
+          <input class="form-control me-sm-2" type="text" placeholder="Search"
+            onkeyup="value=value.replace(/[^\w\u4E00-\u9FA5]/g, '')" minlength="1" maxlength="20" name="keyword"
+            value="">
+          <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+      <div class="ms-3">
+        {{#if isAuthenticated}}
+        <a href="/users/logout" class="btn btn-outline-info">Logout</a>
+        {{else}}
+        <a href="/users/login" class="btn btn-outline-info">Login</a>
+        {{/if}}
+      </div>
     </div>
-  </div>
-</nav>
-  {{{body}}} 
+  </nav>
+  {{{body}}}
   <script src="/javascripts/popper.js"></script>
   <script src="/javascripts/bootstrap.js"></script>
 </body>
+
 </html>
