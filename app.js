@@ -35,12 +35,12 @@ app.use((req, res, next) => {
   next()
 })
 
-app.use((req, res, next) => {
-  console.log(req.session)
-  console.log(req.sessionID)
-  console.log(req.sessionStore)
-  next()
-})
+// app.use((req, res, next) => {
+//   console.log(req.session)
+//   console.log(req.sessionID)
+//   console.log(req.sessionStore)
+//   next()
+// })
 
 app.use(routes)
 

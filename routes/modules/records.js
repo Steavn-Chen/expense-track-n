@@ -21,6 +21,7 @@ router.get('/new', (req, res) => {
     .catch((err) => console.error(err))
 })
 router.post('/new', (req, res) => {
+  const userId = req.user._id
   // 第一種搜尋方式
   // return Category.findOne({ category: req.body.category})
   //  第二種搜尋方式
@@ -38,7 +39,7 @@ router.post('/new', (req, res) => {
     .then((category) => {
       const icon = category[0].categoryIcon
       // 第一種寫法
-      return Record.create({ ...req.body, icon })
+      return Record.create({ ...req.body, icon, userId })
         .then((record) => {
           res.redirect('/')
         })
@@ -62,11 +63,12 @@ router.post('/new', (req, res) => {
     .catch((err) => console.error(err))
 })
 router.get('/:_id/edit', (req, res) => {
+  const userId = req.user._id
   const _id = req.params._id
   return Category.find()
     .lean()
     .then((categories) => {
-      return Record.findById(_id)
+      return Record.findOne({ _id, userId })
         .lean()
         .then((record) => {
           record.date = getDate(record.date)
@@ -77,6 +79,7 @@ router.get('/:_id/edit', (req, res) => {
     .catch((err) => console.error(err))
 })
 router.put('/:_id', (req, res) => {
+  const userId = req.user._id
   const _id = req.params._id
   const { name, date, amount, category } = req.body
   return Category.aggregate([
@@ -94,7 +97,7 @@ router.put('/:_id', (req, res) => {
       const icon = resultIcon[0].categoryIcon
       //  第一種搜尋
       return (
-        Record.updateOne({ _id }, { name, date, category, icon, amount })
+        Record.updateOne({ _id, userId }, { name, date, category, icon, amount })
           // 第二種搜尋
           // return Record.updateOne({ _id }, { ...req.body, icon })
           .then((record) => {
@@ -107,8 +110,9 @@ router.put('/:_id', (req, res) => {
     .catch((err) => console.error(err))
 })
 router.delete('/:_id', (req, res) => {
+  const userId = req.user._id
   const _id = req.params._id
-  return Record.deleteOne({ _id })
+  return Record.deleteOne({ _id, userId })
     .then(() => res.redirect('/'))
     .catch((err) => console.error(err))
 })

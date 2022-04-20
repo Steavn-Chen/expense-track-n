@@ -43,6 +43,7 @@ router.get('/', (req, res) => {
   // start = getDate(start) 
   // end = getDate(end)
   const options = { start, end }
+  const userId = req.user._id
   // const monthList = Array.from({ length: 12 }, (v, i) => ({ value: i + 1 }))
   // const monthList = Array.from({ length: 12 }, (v, i) => v = i + 1 )
   return Category.aggregate([
@@ -51,7 +52,7 @@ router.get('/', (req, res) => {
     },
   ])
     .then((categories) => {
-      return Record.find()
+      return Record.find({ userId })
         .lean()
         .sort({ date: 'asc' })
         .then((records) => {
@@ -73,6 +74,7 @@ router.get('/', (req, res) => {
 })
 //  查詢記錄時間時段首由結束
 router.get('/search', (req, res) => {
+  const userId = req.user._id
   const options = { start, end }
   let message
   const keyword = req.query.keyword.trim()
@@ -83,7 +85,7 @@ router.get('/search', (req, res) => {
   return Category.find()
     .lean()
     .then((categories) => {
-      return Record.find({ name: { $regex: keyword, $options: 'i' } })
+      return Record.find({ name: { $regex: keyword, $options: 'i' }, userId })
         .lean()
         .then((records) => {
           if (records.length === 0) {
@@ -171,13 +173,14 @@ router.get('/search', (req, res) => {
 // })
 // 測試日期寫法開頭
 router.get('/filter2', (req, res) => {
+  const userId = req.user._id
   // const monthList = Array.from({ length: 12 }, (v, i) => ({ value: i + 1 }))
   let message
   const startDate = new Date(req.query.startDate)
   const endDate = new Date(req.query.endDate)
   let endDateFilter = endDate.setSeconds(endDate.getSeconds() + 86399)
   endDateFilter = new Date(endDateFilter)
-  const options = {...req.query, start, end }
+  const options = { ...req.query, start, end }
   return Category.find()
     .lean()
     .then((categories) => {
@@ -186,7 +189,7 @@ router.get('/filter2', (req, res) => {
           $project: {
             date: '$date',
           },
-        },
+        }
       ])
         .then((recordsYear) => {
           const yearList = getYear(recordsYear)
@@ -224,12 +227,14 @@ router.get('/filter2', (req, res) => {
                 icon: '$icon',
                 month: { $month: '$date' },
                 year: { $year: '$date' },
+                userId: '$userId',
               },
             },
             {
               $match: {
                 category: options.category ? options.category : String,
                 date: { $gte: startDate, $lt: endDateFilter },
+                userId: userId,
                 // date: { $gte: startDate, $lt: endDate },
                 //     month: options.month ? Number(options.month) : Number,
                 //     year: options.year ? Number(options.year) : Number,
@@ -237,6 +242,7 @@ router.get('/filter2', (req, res) => {
             },
           ])
             .then((records) => {
+              console.log(records)
               if (records.length === 0) {
                 message = '沒有查詢到消費記錄 !'
                 const totalAmount = 0
