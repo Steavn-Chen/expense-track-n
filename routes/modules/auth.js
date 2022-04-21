@@ -1,0 +1,37 @@
+const express = require('express')
+const passport = require('passport')
+const router = express.Router()
+
+router.get(
+  '/facebook',
+  passport.authenticate('facebook', {
+    scope: ['email', 'public_profile'],
+    // scope: ['public_profile'],
+  })
+)
+
+router.get(
+  '/facebook/callback',
+  passport.authenticate(
+    'facebook',
+    {
+      successRedirect: '/',
+      failureRedirect: '/users/login'
+   }
+  )
+  // function (req, res) {
+  //   // Successful authentication, redirect home.
+  //   res.redirect('/')
+  // }
+)
+
+router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }))
+router.get(
+  '/google/callback',
+  passport.authenticate('google', {
+      successRedirect: '/',
+      failureRedirect: '/users/login'
+   })
+)
+
+module.exports = router
