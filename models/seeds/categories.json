@@ -2,12 +2,12 @@
   {
     "category_en": "traffic",
     "category": "交通出行",
-    "icon": "fa-solid fa-house"
+    "icon": "fa-solid fa-van-shuttle"
   },
   {
     "category_en": "home",
     "category": "家居物業",
-    "icon": "fa-solid fa-house-chimney"
+    "icon": "fa-solid fa-house"
   },
   {
     "category_en": "leisure",

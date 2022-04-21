@@ -1,4 +1,7 @@
-require('../../config/mongoose.js')
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+// require('../../config/mongoose.js')
 const Category = require('../category.js')
 const categoryList = require('./categories.json')
 const db = require('../../config/mongoose.js')
@@ -10,5 +13,5 @@ db.once('open', () => {
       db.close()
       console.log('insertMany categories ok.')
     })
-    .catch(err => console.error(err))
+    .catch((err) => console.error(err))
 })

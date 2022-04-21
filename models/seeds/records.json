@@ -33,5 +33,75 @@
     "date": "2022/03/10  ",
     "amount": "500",
     "icon": "fa-solid fa-pen"
+  },
+  {
+    "name": "高鐵",
+    "category": "交通出行",
+    "date": "2022/01/01  ",
+    "amount": "950",
+    "icon": "fa-solid fa-van-shuttle "
+  },
+  {
+    "name": "老爺酒店",
+    "category": "家居物業",
+    "date": "2022/03/25  ",
+    "amount": "5500",
+    "icon": "fa-solid fa-house"
+  },
+  {
+    "name": "ps5",
+    "category": "休閒娛樂",
+    "date": "2022/03/10  ",
+    "amount": "10050",
+    "icon": "fa-solid fa-face-grin-beam"
+  },
+  {
+    "name": "宵夜",
+    "category": "餐飲食品",
+    "date": "2022/02/25  ",
+    "amount": "250",
+    "icon": "fa-solid fa-utensils"
+  },
+  {
+    "name": "書本",
+    "category": "其他",
+    "date": "2021/03/10  ",
+    "amount": "100",
+    "icon": "fa-solid fa-pen"
+  },
+  {
+    "name": "公車",
+    "category": "交通出行",
+    "date": "2022/04/01  ",
+    "amount": "20",
+    "icon": "fa-solid fa-van-shuttle "
+  },
+  {
+    "name": "青年旅舍",
+    "category": "家居物業",
+    "date": "2022/03/25  ",
+    "amount": "600",
+    "icon": "fa-solid fa-house"
+  },
+  {
+    "name": "夜市",
+    "category": "休閒娛樂",
+    "date": "2021/03/10  ",
+    "amount": "1050",
+    "icon": "fa-solid fa-face-grin-beam"
+  },
+  {
+    "name": "香草冰淇淋",
+    "category": "餐飲食品",
+    "date": "2020/02/25  ",
+    "amount": "400",
+    "icon": "fa-solid fa-utensils"
+  },
+  {
+    "name": "逛街",
+    "category": "其他",
+    "date": "2021/03/10  ",
+    "amount": "1500",
+    "icon": "fa-solid fa-pen"
   }
 ]
