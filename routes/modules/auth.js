@@ -19,10 +19,6 @@ router.get(
       failureRedirect: '/users/login'
    }
   )
-  // function (req, res) {
-  //   // Successful authentication, redirect home.
-  //   res.redirect('/')
-  // }
 )
 
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }))
@@ -34,4 +30,16 @@ router.get(
    })
 )
 
+router.get(
+  '/github',
+  passport.authenticate('github', { scope: ['user:email'] })
+)
+
+router.get(
+  '/github/callback',
+  passport.authenticate('github', {
+    successRedirect: '/',
+    failureRedirect: '/users/login',
+  })
+)
 module.exports = router

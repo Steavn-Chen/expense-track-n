@@ -2,6 +2,7 @@ const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const FacebookStrategy = require('passport-facebook').Strategy
 const GoogleStrategy = require('passport-google-oauth20').Strategy
+const GitHubStrategy = require('passport-github-oauth20').Strategy
 const bcrypt = require('bcryptjs')
 const User = require('../models/user.js')
 
@@ -96,16 +97,38 @@ module.exports = (app) => {
           .catch(err => done(err, false))
         }
   ))
+  passport.use(
+    new GitHubStrategy(
+      {
+        clientID: '396fd018124b5d8d24a1',
+        clientSecret: 'ccb24356efd95b683e8253c50e4b44c99cdbe15b',
+        callbackURL: 'http://127.0.0.1:3000/auth/github/callback',
+         profileFields: ['displayName', 'email']
+      },
+      (accessToken, refreshToken, profile, done) => {
+        const { emails, login } = profile._json
+        const randomPassword = Math.random().toString(36).slice(-8)
+        bcrypt.genSalt(10)
+          .then(salt=> bcrypt.hash(randomPassword, salt))
+          .then(hash => User.findOrCreate(
+            { 
+              email: emails[0].value,
+              name: login,
+              password: hash
+             }, (err, user) => {
+              return done(err, user)
+            })
+            )
+      }
+    )
+  )
   passport.serializeUser((user, done) => {
-    console.log('serializeUser',user)
     done(null, user._id)
   })
   passport.deserializeUser((id, done) => {
-    console.log('id', id)
     User.findById(id)
       .lean()
       .then(user => {
-        console.log('deserializeUser', user)
         done(null, user)
       })
       .catch(err => done(err, null))
