@@ -1,11 +1,12 @@
 const express = require('express')
-const bodyParser = require('body-parser')
 const exphbs = require('express-handlebars')
+const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const session = require('express-session')
-const usePassport = require('./config/passport.js')
+const flash = require('connect-flash')
 
 const hbsHelpers = require('handlebars-helpers')
+const usePassport = require('./config/passport.js')
 const routes = require('./routes')
 
 require('./config/mongoose.js')
@@ -19,9 +20,10 @@ app.engine(
   )
 app.set('view engine', 'hbs')
   
-app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static('public'))
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
+app.use(flash())
 app.use(session({
   secret: 'expenseTrackerSecret',
   resave: false,
@@ -32,15 +34,12 @@ usePassport(app)
 app.use((req, res, next) => {
   res.locals.isAuthenticated = req.isAuthenticated()
   res.locals.user = req.user
+  res.locals.success_msg = req.flash('success_msg')
+  res.locals.warning_msg = req.flash('warning_msg')
+  res.locals.error = req.flash('error')
+  // res.locals.error_msg = req.flash('error_msg')
   next()
 })
-
-// app.use((req, res, next) => {
-//   console.log(req.session)
-//   console.log(req.sessionID)
-//   console.log(req.sessionStore)
-//   next()
-// })
 
 app.use(routes)
 

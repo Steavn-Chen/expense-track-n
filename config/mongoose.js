@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 mongoose.connect('mongodb://localhost/expense-trackerss', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  useCreateIndex: true
 })
 
 const db = mongoose.connection
