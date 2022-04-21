@@ -1,3 +1,6 @@
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 const express = require('express')
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
@@ -12,7 +15,7 @@ const routes = require('./routes')
 require('./config/mongoose.js')
 
 const app = express()
-const port = 3000
+const PORT = process.env.PORT
 
 app.engine(
   'hbs',
@@ -24,11 +27,13 @@ app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 app.use(flash())
-app.use(session({
-  secret: 'expenseTrackerSecret',
-  resave: false,
-  saveUninitialized: true
-}))
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+  })
+)
 usePassport(app)
 
 app.use((req, res, next) => {
@@ -43,6 +48,6 @@ app.use((req, res, next) => {
 
 app.use(routes)
 
-app.listen(port, () => {
-  console.log(`Expense-tracker web is running on http://localhost:${port}`)
+app.listen(PORT, () => {
+  console.log(`Expense-tracker web is running on http://localhost:${PORT}`)
 })

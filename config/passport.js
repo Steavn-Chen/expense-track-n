@@ -42,11 +42,10 @@ module.exports = (app) => {
   passport.use(
     new FacebookStrategy(
       {
-        clientID: '1360864341083799',
-        clientSecret: '6d9977b280e494b6c25b87cd58da9371',
-        callbackURL: 'http://localhost:3000/auth/facebook/callback',
+        clientID: process.env.FACEBOOK_CLIENT_ID,
+        clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+        callbackURL: process.env.FACEBOOK_CLIENT_CALLBACK,
         profileFields: ['displayName', 'email'],
-        // profileFields: ['id', 'displayName', 'photos', 'email'],
       },
       function (accessToken, refreshToken, profile, done) {
         console.log(profile)
@@ -70,55 +69,60 @@ module.exports = (app) => {
   passport.use(
     new GoogleStrategy(
       {
-        clientID:
-          '1074980343957-u9cu5sv42ret1jaq8panueg5q8hnqhc7.apps.googleusercontent.com',
-        clientSecret: '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',
-        callbackURL: 'http://localhost:3000/auth/google/callback',
+        clientID: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL: process.env.GOOGLE_CLIENT_CALLBACK,
         // profileFields: ['displayName', 'email']
       },
-       (accessToken, refreshToken, profile, done) => {
+      (accessToken, refreshToken, profile, done) => {
         const { name, email } = profile._json
         const randomPassword = Math.random().toString(36).slice(-10)
-        bcrypt.genSalt(10)
+        bcrypt
+          .genSalt(10)
           .then((salt) => bcrypt.hash(randomPassword, salt))
-          .then(hash => {
-             return User.findOrCreate(
-               { email },
-               {
-                 name,
-                 email,
-                 password: hash,
-               }, 
-               (err, user) => {
+          .then((hash) => {
+            return User.findOrCreate(
+              { email },
+              {
+                name,
+                email,
+                password: hash,
+              },
+              (err, user) => {
                 return done(err, user)
               }
             )
           })
-          .catch(err => done(err, false))
-        }
-  ))
+          .catch((err) => done(err, false))
+      }
+    )
+  )
   passport.use(
     new GitHubStrategy(
       {
-        clientID: '396fd018124b5d8d24a1',
-        clientSecret: 'ccb24356efd95b683e8253c50e4b44c99cdbe15b',
-        callbackURL: 'http://127.0.0.1:3000/auth/github/callback',
-         profileFields: ['displayName', 'email']
+        clientID: process.env.GITHUB_CLIENT_ID,
+        clientSecret: process.env.GITHUB_CLIENT_SECRET,
+        callbackURL: process.env.GITHUB_CLIENT_CALLBACK,
+        profileFields: ['displayName', 'email'],
       },
       (accessToken, refreshToken, profile, done) => {
         const { emails, login } = profile._json
         const randomPassword = Math.random().toString(36).slice(-8)
-        bcrypt.genSalt(10)
-          .then(salt=> bcrypt.hash(randomPassword, salt))
-          .then(hash => User.findOrCreate(
-            { 
-              email: emails[0].value,
-              name: login,
-              password: hash
-             }, (err, user) => {
-              return done(err, user)
-            })
+        bcrypt
+          .genSalt(10)
+          .then((salt) => bcrypt.hash(randomPassword, salt))
+          .then((hash) =>
+            User.findOrCreate(
+              {
+                email: emails[0].value,
+                name: login,
+                password: hash,
+              },
+              (err, user) => {
+                return done(err, user)
+              }
             )
+          )
       }
     )
   )
