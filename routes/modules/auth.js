@@ -5,8 +5,7 @@ const router = express.Router()
 router.get(
   '/facebook',
   passport.authenticate('facebook', {
-    scope: ['email', 'public_profile'],
-    // scope: ['public_profile'],
+    scope: ['email', 'public_profile']
   })
 )
 
@@ -17,7 +16,7 @@ router.get(
     {
       successRedirect: '/',
       failureRedirect: '/users/login'
-   }
+    }
   )
 )
 
@@ -25,9 +24,9 @@ router.get('/google', passport.authenticate('google', { scope: ['profile', 'emai
 router.get(
   '/google/callback',
   passport.authenticate('google', {
-      successRedirect: '/',
-      failureRedirect: '/users/login'
-   })
+    successRedirect: '/',
+    failureRedirect: '/users/login'
+  })
 )
 
 router.get(
@@ -39,7 +38,7 @@ router.get(
   '/github/callback',
   passport.authenticate('github', {
     successRedirect: '/',
-    failureRedirect: '/users/login',
+    failureRedirect: '/users/login'
   })
 )
 module.exports = router

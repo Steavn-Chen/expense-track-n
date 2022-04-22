@@ -22,43 +22,24 @@ router.get('/new', (req, res) => {
 })
 router.post('/new', (req, res) => {
   const userId = req.user._id
-  // 第一種搜尋方式
-  // return Category.findOne({ category: req.body.category})
-  //  第二種搜尋方式
   return Category.aggregate([
     {
-      $match: { category: req.body.category },
+      $match: { category: req.body.category }
     },
     {
-      $project: { _id: 0, __v: 0, category_en: 0, category: 0 },
+      $project: { _id: 0, __v: 0, category_en: 0, category: 0 }
     },
     {
-      $project: { categoryIcon: '$icon' },
-    },
+      $project: { categoryIcon: '$icon' }
+    }
   ])
     .then((category) => {
       const icon = category[0].categoryIcon
-      // 第一種寫法
       return Record.create({ ...req.body, icon, userId })
         .then((record) => {
           res.redirect('/')
         })
         .catch((err) => console.error(err))
-      // 第二種寫法
-      // const newBody = Object.assign(req.body, { icon })
-      // return Record.create(newBody)
-      //   .then(() => res.render('new'))
-      //   .catch(err => console.error(err))
-      // 第三種寫法
-      // return Record.create({
-      //   name: req.body.name,
-      //   date: req.body.date,
-      //   category: req.body.category,
-      //   amount: req.body.amount,
-      //   icon: icon,
-      // })
-      //   .then(() => res.render('new'))
-      //   .catch((err) => console.error(err))
     })
     .catch((err) => console.error(err))
 })
@@ -84,22 +65,19 @@ router.put('/:_id', (req, res) => {
   const { name, date, amount, category } = req.body
   return Category.aggregate([
     {
-      $match: { category: category },
+      $match: { category: category }
     },
     {
-      $project: { _id: 0, __v: 0, category_en: 0, category: 0 },
+      $project: { _id: 0, __v: 0, category_en: 0, category: 0 }
     },
     {
-      $project: { categoryIcon: '$icon' },
-    },
+      $project: { categoryIcon: '$icon' }
+    }
   ])
     .then((resultIcon) => {
       const icon = resultIcon[0].categoryIcon
-      //  第一種搜尋
       return (
         Record.updateOne({ _id, userId }, { name, date, category, icon, amount })
-          // 第二種搜尋
-          // return Record.updateOne({ _id }, { ...req.body, icon })
           .then((record) => {
             record.date = getDate(record.date)
             res.redirect(`/records/${_id}/edit`)

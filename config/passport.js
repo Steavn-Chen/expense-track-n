@@ -22,15 +22,11 @@ module.exports = (app) => {
       User.findOne({ email })
        .then(user => {
          if (!user) {
-          //  return done(null, false, { type: 'error', message: '電子郵件尚未註冊。' })
-          //  return done(null, false, req.flash('error_msg', '電子郵件尚未註冊 !'))
            return done(null, false, { message: '電子郵件尚未註冊 !' })
          }
          return bcrypt.compare(password, user.password)
            .then(isMatch => {
              if (!isMatch) {
-                // return done(null, false, { type: 'error', message: '密碼或電子郵件錯誤。' })
-          //  return done(null, false, req.flash('error_msg', '密碼或電子郵件錯誤'))
                return done(null, false, { message: '密碼或電子郵件錯誤 !' })
              }
              return done(null, user)
@@ -48,7 +44,6 @@ module.exports = (app) => {
         profileFields: ['displayName', 'email'],
       },
       function (accessToken, refreshToken, profile, done) {
-        console.log(profile)
         const { email, name } = profile._json
         const randomPassword = Math.random().toString(36).slice(-10)
         bcrypt
@@ -72,7 +67,6 @@ module.exports = (app) => {
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         callbackURL: process.env.GOOGLE_CLIENT_CALLBACK,
-        // profileFields: ['displayName', 'email']
       },
       (accessToken, refreshToken, profile, done) => {
         const { name, email } = profile._json

@@ -18,15 +18,15 @@ router.get('/register', (req, res) => {
 })
 router.post('/register', (req, res) => {
   const { email, name, password, confirmPassword } = req.body
-  const errors =[]
-  if (!email || !name || !password || !confirmPassword ) {
-    errors.push({ message: '所有欄位都是必填的 !'})
+  const errors = []
+  if (!email || !name || !password || !confirmPassword) {
+    errors.push({ message: '所有欄位都是必填的 !' })
   }
   if (password !== confirmPassword) {
-    errors.push({ message:  '密碼與確認密碼不相符 !'})
+    errors.push({ message: '密碼與確認密碼不相符 !' })
   }
   if (errors.length) {
-   return res.render('register', {
+    return res.render('register', {
       email,
       name,
       password,
@@ -37,7 +37,7 @@ router.post('/register', (req, res) => {
   User.findOne({ email })
     .then((user) => {
       if (user) {
-        errors.push({ message: '這個電子郵件己經被註冊了。'})
+        errors.push({ message: '這個電子郵件己經被註冊了。' })
         return res.render('register', {
           name,
           email,
@@ -57,15 +57,6 @@ router.post('/register', (req, res) => {
           req.flash('success_msg', '您註冊一個新的帳號。')
           res.redirect('/users/login')
         })
-      // return User.create({
-      //   name,
-      //   email,
-      //   password,
-      // })
-      //   .then((user) =>  {
-      //     req.flash('success_msg', '您註冊一個新的帳號。')
-      //     res.redirect('/users/login')
-      //   })
         .catch((err) => console.log(err))
     })
     .catch((err) => console.log(err))
