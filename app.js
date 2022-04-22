@@ -16,6 +16,7 @@ require('./config/mongoose.js')
 
 const app = express()
 const PORT = process.env.PORT
+const BASE_URL = process.env.BASE_URL
 
 app.engine(
   'hbs',
@@ -47,7 +48,7 @@ app.use((req, res, next) => {
 })
 
 app.use(routes)
-
+console.log(` ${BASE_URL}`)
 app.listen(PORT, () => {
-  console.log(`Expense-tracker web is running on http://localhost:${PORT}`)
+  console.log(`Expense-tracker web is running on ${BASE_URL}`)
 })
