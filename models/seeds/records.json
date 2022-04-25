@@ -3,105 +3,90 @@
     "name": "捷運",
     "category": "交通出行",
     "date": "2022/04/01  ",
-    "amount": "50",
-    "icon": "fa-solid fa-van-shuttle "
+    "amount": "50"
   },
   {
     "name": "房租",
     "category": "家居物業",
     "date": "2022/03/25  ",
-    "amount": "5000",
-    "icon": "fa-solid fa-house"
+    "amount": "5000"
   },
   {
     "name": "出國",
     "category": "休閒娛樂",
     "date": "2022/03/10  ",
-    "amount": "50",
-    "icon": "fa-solid fa-face-grin-beam"
+    "amount": "50"
   },
   {
     "name": "早餐",
     "category": "餐飲食品",
     "date": "2022/02/25  ",
-    "amount": "200",
-    "icon": "fa-solid fa-utensils"
+    "amount": "200"
   },
   {
     "name": "電影: 驚奇隊長~風雲再起",
     "category": "其他",
     "date": "2022/03/10  ",
-    "amount": "500",
-    "icon": "fa-solid fa-pen"
+    "amount": "500"
   },
   {
     "name": "高鐵",
     "category": "交通出行",
     "date": "2022/01/01  ",
-    "amount": "950",
-    "icon": "fa-solid fa-van-shuttle "
+    "amount": "950"
   },
   {
     "name": "老爺酒店",
     "category": "家居物業",
     "date": "2022/03/25  ",
-    "amount": "5500",
-    "icon": "fa-solid fa-house"
+    "amount": "5500"
   },
   {
     "name": "ps5",
     "category": "休閒娛樂",
     "date": "2022/03/10  ",
-    "amount": "10050",
-    "icon": "fa-solid fa-face-grin-beam"
+    "amount": "10050"
   },
   {
     "name": "宵夜",
     "category": "餐飲食品",
     "date": "2022/02/25  ",
-    "amount": "250",
-    "icon": "fa-solid fa-utensils"
+    "amount": "250"
   },
   {
     "name": "書本",
     "category": "其他",
     "date": "2021/03/10  ",
-    "amount": "100",
-    "icon": "fa-solid fa-pen"
+    "amount": "100"
   },
   {
     "name": "公車",
     "category": "交通出行",
     "date": "2022/04/01  ",
-    "amount": "20",
-    "icon": "fa-solid fa-van-shuttle "
+    "amount": "20"
   },
   {
     "name": "青年旅舍",
     "category": "家居物業",
     "date": "2022/03/25  ",
-    "amount": "600",
-    "icon": "fa-solid fa-house"
+    "amount": "600"
   },
   {
     "name": "夜市",
     "category": "休閒娛樂",
     "date": "2021/03/10  ",
-    "amount": "1050",
-    "icon": "fa-solid fa-face-grin-beam"
+    "amount": "1050"
   },
   {
     "name": "香草冰淇淋",
     "category": "餐飲食品",
     "date": "2020/02/25  ",
-    "amount": "400",
-    "icon": "fa-solid fa-utensils"
+    "amount": "400"
   },
   {
     "name": "逛街",
     "category": "其他",
     "date": "2021/03/10  ",
-    "amount": "1500",
-    "icon": "fa-solid fa-pen"
+    "amount": "1500"
   }
 ]

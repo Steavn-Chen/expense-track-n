@@ -47,7 +47,6 @@ app.use((req, res, next) => {
 })
 
 app.use(routes)
-console.log(` ${BASE_URL}`)
 app.listen(PORT, () => {
   console.log(`Expense-tracker web is running on ${BASE_URL}`)
 })
