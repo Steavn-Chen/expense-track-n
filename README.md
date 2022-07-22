@@ -4,6 +4,10 @@
 
 ### 本專案目的讓使用者記錄每個月的開銷記錄除了可以新增、修改、刪除，查詢上可以依照起始時間至最後時間查詢這段時間的消費記錄。
 
+## HEROKU
+- https://expenxe-tracker-t.herokuapp.com/users/login
+- 可使用 root@example.com 登入，密碼 123456
+
 ## 啓動方式
 
 - 將專案 clone 到本地端
