@@ -4,6 +4,10 @@
 
 ### 本專案的目的是讓使用者記錄每一筆開銷除了可以新增、修改、刪除記錄外，在查詢上可以依照年、月、類別來進行綜合查詢。
 
+## HEROKU
+- https://expenxe-tracker-t.herokuapp.com/users/login
+- 可使用 user1@example.com 登入，密碼 123456
+
 ## 啓動方式
 
 - 將專案 clone 到本地端
