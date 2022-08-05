@@ -6,7 +6,7 @@
 
 ## HEROKU
 - https://expenxe-tracker-t.herokuapp.com/users/login
-- 可使用 root@example.com 登入，密碼 123456
+- 可使用 user1@example.com 登入，密碼 123456
 
 ## 啓動方式
 
