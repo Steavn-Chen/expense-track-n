@@ -16,7 +16,7 @@ router.get('/new', (req, res) => {
   return Category.find()
     .lean()
     .then((categories) => {
-      res.render('new', { categories: categories, options })
+      res.render('new', { categories, options })
     })
     .catch((err) => console.error(err))
 })
@@ -65,7 +65,7 @@ router.put('/:_id', (req, res) => {
   const { name, date, amount, category } = req.body
   return Category.aggregate([
     {
-      $match: { category: category }
+      $match: { category }
     },
     {
       $project: { _id: 0, __v: 0, category_en: 0, category: 0 }

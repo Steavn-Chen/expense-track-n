@@ -29,7 +29,7 @@ router.get('/', (req, res) => {
           const totalAmount = getTotal(records)
           const yearList = getYear(records)
           res.render('index', {
-            records: records,
+            records,
             totalAmount,
             year: yearList,
             month: monthList,

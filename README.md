@@ -4,12 +4,20 @@
 
 ### 本專案的目的是讓使用者記錄每一筆開銷除了可以新增、修改、刪除記錄外，在查詢上可以依照年、月、類別來進行綜合查詢。
 
+## heroku 
+https://expenxe-tracker-t.herokuapp.com
+
+## 測試帳號
+
+    root@example.com/123456
+    user1@example.com/123456
+    user2@example.com/123456
+
 ## 啓動方式
 
 - 將專案 clone 到本地端
 
--
-https://github.com/Steavn-Chen/expense-track-n
+https://github.com/Steavn-Chen/expense-track-v1
 
 - 進入到專案資料夾
 ```

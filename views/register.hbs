@@ -1,34 +1,34 @@
 <div class='row mt-5 register-page'>
-  <div class='col-xl-4 col-md-5 col-sm-8 m-auto'>
+  <div class='col-xl-5 col-md-6 col-sm-8 m-auto'>
     <div class='card card-body'>
       <h1 class='text-center mt-3'>Register</h1>
       {{> message}}
       <form action='/users/register' method='POST'>
         <div class='form-group mt-2'>
-          <label for='name' class='mt-2'>Name</label>
+          <label for='name' class='mt-2 form-group-name'><i class="far fa-user"></i>  Name</label>
           <input type='text' id='name' name='name' class='form-control mt-1' placeholder='Enter Name'
             value="{{name}}" />
         </div>
         <div class='form-group mt-2'>
-          <label for='email' class='mt-2'>Email</label>
+          <label for='email' class='mt-2 form-group-email'><i class="far fa-envelope "></i>  Email</label>
           <input type='email' id='email' name='email' class='form-control mt-1' placeholder='Enter Email'
             value="{{email}}" />
         </div>
         <div class='form-group mt-2'>
-          <label for='password' class='mt-2'>Password</label>
+          <label for='password' class='mt-2 form-group-password'><i class="fas fa-key"></i>  Password</label>
           <input type='password' id='password' name='password' class='form-control mt-1' placeholder='Enter Password'
             value="{{password}}" />
         </div>
         <div class='form-group mt-2'>
-          <label for='confirmPassword' class='mt-2'>Confirm Password</label>
+          <label for='confirmPassword' class='mt-2 form-group-password'><i class="fas fa-key"></i>  Confirm Password</label>
           <input type='password' id='confirmPassword' name='confirmPassword' class='form-control mt-1'
             placeholder='Confirm Password' value="{{confirmPassword}}" />
         </div>
-        <div class='d-grid gap-2 mt-4'>
-          <button type='submit' class='btn btn-info btn-block'>Register</button>
-          <a href="/auth/facebook" class="btn btn-primary btn-block">Facebook Login</a>
-          <a href="/auth/google" class="btn btn-success btn-block">Google Login</a>
-          <a href="/auth/github" class="btn btn-secondary btn-block">Github Login</a>
+        <div class="grid mt-4 d-md-flex justify-content-center">
+          <button type="submit" class="btn btn-primary mx-2" id="loginSubmitBtn">Login</button>
+          <a href="/auth/facebook" class="btn btn-info mx-2" id="loginFacebookBtn"><i class="fab fa-facebook-square"></i></a>
+          <a href="/auth/google" class="btn btn-warning mx-2" id="loginFGoogleBtn"><i class="fab fa-google"></i></a>
+          <a href="/auth/github" class="btn btn-success mx-2" id="loginFGoogleBtn"><i class="fab fa-github"></i></a>
         </div>
       </form>
       <p class='lead mt-4'>
