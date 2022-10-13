@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-
+const moment = require('moment')
 const Record = require('../../models/record')
 const Category = require('../../models/category.js')
 
@@ -85,8 +85,12 @@ router.get('/filter', (req, res) => {
       return Record.aggregate([
         {
           $project: {
-            date: '$date'
+            date: '$date',
+            userId: '$userId'
           }
+        },
+        {
+          $match: { userId }
         }
       ])
         .then((recordsYear) => {
@@ -96,13 +100,13 @@ router.get('/filter', (req, res) => {
               $project: {
                 name: '$name',
                 category: '$category',
-                date: '$date',
+                date: { $dateToString: { format: "%Y-%m-%d-%H:%M:%S", date: "$date", timezone: "Asia/Taipei" } },
                 amount: '$amount',
                 icon: '$icon',
-                month: { $month: '$date' },
-                year: { $year: '$date' },
+                month: { $month: { date: '$date', timezone: "Asia/Taipei" } },
+                year: { $year: { date: '$date', timezone: "Asia/Taipei" } },
                 userId: '$userId'
-              }
+              },
             },
             {
               $match: {
@@ -126,9 +130,9 @@ router.get('/filter', (req, res) => {
                   year: yearList
                 })
               }
-              records = records.map(
-                (i) => (i = { ...i, date: getDate(i.date) })
-              )
+              // records = records.map(
+              //   (i) => (i = { ...i, date: getDate(i.date) })
+              // )
               const totalAmount = getTotal(records)
               res.render('index', {
                 records,

@@ -21,7 +21,7 @@ body {
   border-radius: 115px;
 }
 .total-demo .total-name {
-  padding: 10px;
+  padding: 20px;
   display: flex;
   justify-content: flex-end;
   color: rgb(245, 206, 216);
@@ -230,7 +230,6 @@ body {
 .fa-user {
   color: rgb(30, 201, 253);
 }
-
 #loginSubmitBtn {
   background-color: #9a9a9a;
   padding: 10px;
@@ -255,7 +254,7 @@ body {
 
 #registerSubmitBtn {
   border-radius: 30px;
-  width: 150px;
+  /* width: 150px; */
 }
 
 #loginFacebookBtn {

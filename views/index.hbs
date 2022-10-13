@@ -3,7 +3,7 @@
     <form action="/filter">
       <div class="col row">
         <div class="col select-group">
-          <select class="form-select btn-info" id="floatingSelectGrid" aria-label="Floating label select example"
+          <select class="form-select btn-light" id="floatingSelectGrid" aria-label="Floating label select example"
             name="year" onchange="submit()">
             <option selected value="">全部年份</option>
             {{#each year}}
@@ -12,7 +12,7 @@
           </select>
         </div>
         <div class="col select-group">
-          <select class="form-select btn-info" id="floatingSelectGrid" aria-label="Floating label select example"
+          <select class="form-select btn-light" id="floatingSelectGrid" aria-label="Floating label select example"
             name="month" onchange="submit()">
             <option selected value="">全部月份</option>
             {{#each month}}
@@ -22,7 +22,7 @@
           </select>
         </div>
         <div class="col select-group">
-          <select class="form-select btn-info" id="floatingSelectGrid" aria-label="Floating label select example"
+          <select class="form-select btn-light" id="floatingSelectGrid" aria-label="Floating label select example"
             name="category" onchange="submit()">
             <option selected value="">全部類別</option>
             {{#each categories}}
@@ -94,7 +94,7 @@
           <div class="col-md-3 col-sm-6 icon">
             <i class="{{this.icon}} fa-5x"></i>
           </div>
-          <div class="col-md-3 col-sm-6  content">
+          <div class="col-md-3 col-sm-6 content">
             <div class=" name">
               {{this.name}}
             </div>
