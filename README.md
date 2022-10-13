@@ -26,10 +26,6 @@ https://expenxe-tracker-v1.herokuapp.com
     user1@example.com/123456
     user2@example.com/123456
 
-## HEROKU
-- https://expenxe-tracker-t.herokuapp.com/users/login
-- 可使用 user1@example.com 登入，密碼 123456
-
 ## 啓動方式
 
 - 將專案 clone 到本地端
@@ -65,6 +61,7 @@ https://github.com/Steavn-Chen/expense-track-v1
 
 ## 使用的套件
 
+- express-session 1.17.2
 - handlebars-helpers: 0.10.0
 - method-override: 3.0.0
 - moment: 2.29.1
