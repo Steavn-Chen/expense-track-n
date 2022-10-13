@@ -1,11 +1,24 @@
 # 家用記帳本
+  使用 Node.js Express 打造家庭每天支出記錄，以掌控每月可動用的現金。
+## 登入頁
+![login](public/images/%E7%99%BB%E5%85%A5.PNG
+)
+## 首頁
+![home](public/images/%E5%9C%96%E7%89%87%E4%B8%80.PNG
+)
 
-![rejected](https://github.com/Steavn-Chen/expense-track-n/blob/main/public/images/%E5%9C%96%E7%89%871.PNG)
+## 功能表單
+<1.0 版>
 
-### 本專案的目的是讓使用者記錄每一筆開銷除了可以新增、修改、刪除記錄外，在查詢上可以依照年、月、類別來進行綜合查詢。
+    可以新增一筆新的支出，也可以對原有的支出做修改，刪除。
 
-## heroku 
-https://expenxe-tracker-t.herokuapp.com
+<2.0 版>
+
+    使用者得先註冊帳號才能使用，此外也可以用 Google，Facebook Github 第三方帳號註冊。
+    也可以依照類別、年、月瀏覽所有的記錄。
+
+## heroku 遠端
+https://expenxe-tracker-v1.herokuapp.com
 
 ## 測試帳號
 
@@ -40,14 +53,22 @@ https://github.com/Steavn-Chen/expense-track-v1
 ```
 ## 開發環境
    
-- Node.js -v14.15.1
-- Express -4.17.3
-- Express-Handlebars-5.3.4
-- mongoose 5.12.15   
+- node.js -v14.15.1
+- express -4.17.3
+- express-handlebars-5.3.4
+- mongoose 5.12.15
+- mongoose-find-or-create 1.3.1 
 
 ## 使用的套件
 
 - handlebars-helpers: 0.10.0
 - method-override: 3.0.0
 - moment: 2.29.1
+- bcryptjs 2.4.3
+- connect-flash 0.1.1
+- dotenv 16.0.0
+- passport-local 1.0.0
+- passport-facebook 3.0.0
+- passport-github-oauth20 1.0.4
+- passport-google-oauth20 2.0.0
    

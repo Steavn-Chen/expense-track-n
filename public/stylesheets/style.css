@@ -57,6 +57,7 @@ body {
 .list-group-item > .row > .content > .date {
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 .list-group-item > .row > .amount {
   display: flex;
