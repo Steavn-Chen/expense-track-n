@@ -26,6 +26,10 @@ https://expenxe-tracker-v1.herokuapp.com
     user1@example.com/123456
     user2@example.com/123456
 
+## HEROKU
+- https://expenxe-tracker-t.herokuapp.com/users/login
+- 可使用 user1@example.com 登入，密碼 123456
+
 ## 啓動方式
 
 - 將專案 clone 到本地端
