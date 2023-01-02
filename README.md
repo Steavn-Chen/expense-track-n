@@ -17,8 +17,8 @@
     使用者得先註冊帳號才能使用，此外也可以用 Google，Facebook Github 第三方帳號註冊。
     也可以依照類別、年、月瀏覽所有的記錄。
 
-## heroku 遠端
-https://expenxe-tracker-v1.herokuapp.com
+## GCP 遠端
+https://expense-tracker-rbdzjma4hq-uw.a.run.app
 
 ## 測試帳號
 
